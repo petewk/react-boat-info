@@ -1,0 +1,57 @@
+header {
+    height: 8vh;
+}
+
+#container {
+    height: 89vh;
+}
+
+#navBar {
+    background-color:aquamarine
+}
+
+#logo {
+    display: inline-block;
+}
+
+#links {
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+}
+
+.navLink, .indexLink {
+    margin: 30px 20px;
+    text-decoration: underline;
+    color: blue;
+}
+
+
+#pageIndex {
+    background-color: lightgray;
+    width: 20vw;
+    float: left;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#formBody {
+    width: 80vw;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.fileName {
+    width: 300px;
+    text-align: center;
+}
+
+.fileBody {
+    width: 1000px;
+    height: 400px;
+}
+
+#textEditor {
+    border: 2px solid black;
+}

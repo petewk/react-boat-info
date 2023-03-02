@@ -13,10 +13,10 @@ function PageIndex(){
     const [fileConts, setFileConts] = useState([]);
     const [fileCurr, setFileCurr] = useState('');
     const [edit, setEdit] = useState(false);
-    const [fileName, setFileName] = useState('');
     const [jsonCont, setJsonCont] = useState([{}]);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [bodyHTML, setBodyHTML] = useState();
+    const [bodyHTML, setBodyHTML] = useState("");
+    const [fileTitle, setFileTitle] = useState('');
 
 
     useEffect(()=>{
@@ -29,30 +29,42 @@ function PageIndex(){
                 setFileConts(Object.values(data));
             }
             
-        )
+        );
     }, []);
 
-    function setPage(e){
-        var file = e.target.attributes.filename.value;
-        var jsonData = fileConts[fileNames.indexOf(file)];
-        setFileCurr(fileNames[fileNames.indexOf(file)]);
 
-        // trying setpagecontent function
 
-        const rawEditorData = JSON.parse(jsonData);
+    function SetPage(e){
+        //get current file name and set current file
+        setFileCurr(e.target.attributes.fileName.value);
+        var fileNametemp = e.target.innerHTML;
+        setFileTitle(fileNametemp);
+
+        //take that file contents and retrieve to HTML
+
+        const rawEditorData = JSON.parse(fileConts[fileNames.indexOf(e.target.attributes.fileName.value)]);
         if (rawEditorData !== null){
             const contentState = convertFromRaw(rawEditorData);
             const newEditorState = EditorState.createWithContent(contentState);
-            setEditorState(newEditorState)
+            setEditorState(newEditorState)        
         };
 
-        const content = editorState.getCurrentContent()
+    }
 
+    // set content body here on effect hook to force on re-render
+
+    useEffect(()=>{
+        setContentHTML()
+    });
+
+
+    function setContentHTML(){
+        const content = editorState.getCurrentContent();
         setBodyHTML(stateToHTML(content));
-        console.log(stateToHTML(content));
-
     }
     
+
+    // enable editing mode to change contents of existing file
 
     function enableEdit(){
         setEdit(!edit);
@@ -69,6 +81,7 @@ function PageIndex(){
         })
     }
 
+    
 
 
     return (
@@ -80,7 +93,7 @@ function PageIndex(){
                         ): (
                             fileNames.map((item, i)=>(
                                 <div key={i}>
-                                    <h5  className="indexLink" filename={item} onClick={setPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                    <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
                                 </div>
                             ))
                         )}
@@ -96,11 +109,10 @@ function PageIndex(){
                     ) : (
                         <>
                         <h1>
-                            {fileNames[fileNames.indexOf(fileCurr)].slice(0, -5).replaceAll('-', " ")}
+                            {fileTitle}
                         </h1>
-                        <div id="bodyDiv" key="body" dangerouslySetInnerHTML={{__html: bodyHTML}}>
+                        <h2 dangerouslySetInnerHTML={{__html: bodyHTML}}></h2>
 
-                        </div>
                         <button onClick={enableEdit}>Edit text</button>
                     </>
                     )

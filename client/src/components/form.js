@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Editor, EditorState } from 'draft-js';
 import '../../node_modules/draft-js/dist/Draft.css';
+import MyEditor from './editor.js';
 
 function Form(props){
 
@@ -20,14 +20,6 @@ function Form(props){
         setEditing(!editing);
     }
 
-    const RichtextEditor = () => {
-        const [editorState, setEditorState] = useState(()=> EditorState.createEmpty())
-        return (
-            <>
-            <Editor name="textEditor" editorState={editorState} onChange={setEditorState}/>
-            </>
-        )
-      } 
 
 
 
@@ -35,15 +27,12 @@ function Form(props){
     return (
         <div id="formBody">
             
-            <form>
-                <RichtextEditor/>
-            </form>
             
             {props.editing ? (
                 <>  
                     <h1>Editing page</h1>
                     <h2>Correct the text below and hit save. Doing so will replace the original page with your ammended one</h2>
-                    <form action="http://localhost:5000/" method="post">
+                    {/* <form action="http://localhost:5000/" method="post">
                         <input name='toDelete' className="fileName" value={props.fileName}></input> 
                         <br></br>
                         <h3>Will become</h3>
@@ -53,12 +42,13 @@ function Form(props){
                         <textarea className="fileBody" name='fileBody' defaultValue={props.fileText}></textarea>
                         <button type='submit'>Save new</button>
                         <button onClick={cancelEdit}>Cancel Edit</button>
-                    </form>
+                    </form> */}
                 </>
             ) : (
                <> 
                     <h1>Write new page</h1>
-                    <h3>Here you can create a new page of info to be viewed. The title you set will be how the page shows on the Index on the left hand side of the main page, and the text content entered into the text area will be the body</h3>
+                    <MyEditor />
+                    {/* <h3>Here you can create a new page of info to be viewed. The title you set will be how the page shows on the Index on the left hand side of the main page, and the text content entered into the text area will be the body</h3>
 
                     <form action="http://localhost:5000/" method="post">
                         <label htmlFor="fileName">Page Title</label><br />
@@ -67,8 +57,8 @@ function Form(props){
                         
                         <textarea className="fileBody" name="fileBody" placeholder="Input text body here"></textarea><br />
 
-                        <button>Submit new page</button>
-                    </form>
+                        <button>Submit new page</button> */}
+                    {/* </form> */}
 
                 </>
             )}

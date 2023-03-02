@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 
 
@@ -43,13 +44,19 @@ app.post("/", (req, res)=>{
         if(err) throw err;
         console.log("New file " + req.body.fileName + " created");
     })
-    // res.redirect("http://localhost:3000")
+    res.redirect("http://localhost:3000")
 });
 
 
 app.post("/rich", (req, res)=>{
-    console.log(req.body);
-    console.log("Rich text request");
+    const body = JSON.parse(req.body.hiddenForm);
+    console.log(body);
+    const fileName = req.body.fileName.replace(/\s/g, "-");
+    fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
+        if (err) throw err;
+        console.log("New file created")
+    })
+    res.redirect("http://localhost:3000")
 })
 
 app.listen(5000, ()=>{

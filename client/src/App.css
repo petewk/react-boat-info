@@ -1,49 +1,66 @@
+:root {
+    --piperDarkBlue: #0b3c62;
+    --piperMidBrown: #a58d6f;
+  }
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 header {
-    height: 8vh;
+    height: 10vh;
 }
 
 #container {
-    height: 89vh;
+    height: 90vh;
 }
 
 #navBar {
-    background-color:aquamarine
+    background-color:var(--piperDarkBlue);
+    height: inherit;
+    color: var(--piperMidBrown);
+}
+
+.navLink {
+    color: var(--piperMidBrown);
 }
 
 #logo {
     display: inline-block;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-left: 40px;
+    padding-top: 1vh;
 }
 
 #links {
     display: inline-block;
     float: right;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .navLink, .indexLink {
     margin: 30px 20px;
     text-decoration: underline;
-    color: blue;
+
 }
 
+.indexLink {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 20px 0 5px 10px;
+    overflow-wrap: break-word;
+    padding: 3px;
+}
 
 #pageIndex {
     background-color: lightgray;
-    width: 20vw;
+    max-width: 17vw;
     float: left;
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-}
-
-#formBody {
-    width: 80vw;
-    margin: 0 auto;
-    text-align: center;
-}
-
-#hiddenForm { 
-    display: none;
+    padding-top: 30px;
 }
 
 .fileName {
@@ -56,17 +73,13 @@ header {
     height: 400px;
 }
 
-#textEditor {
-    border: 2px solid black;
+
+#welcomeTitle {
+    text-align: center;
+    width: 75vw;
+    margin-top: 40px;
 }
 
-#editorDiv {
-    background-color: antiquewhite;
-    border: 1px solid blue;
-    width: 50vw;
-    margin: 0 auto;
-    height: 400px;
-}
 
 #displayDiv {
     background-color: whitesmoke;
@@ -74,4 +87,87 @@ header {
     width: 50vw;
     margin: 0 auto;
     height: 400px;
+}
+
+
+/* Main info page styling */
+
+#infoPageBody {
+    width: 75vw;
+    margin: 0 auto 0 75px;
+}
+
+#infoPageBody > h1 {
+    margin: 50px 0;
+}
+
+#editButton{
+    position: relative;
+    right: 5vw;
+    float: right;
+    top: -85px;
+}
+
+#textPage {
+    display: inline-block;
+    width: 78.5vw;
+    float: left;
+}
+
+
+/* Input submit page styling */
+
+#nameInput {
+    width: 20vw;
+    min-width: 400px;
+    font-size: 1.2em;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px auto 0 auto;
+}
+
+#formBody {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#hiddenForm { 
+    display: none;
+}
+
+#textEditor {
+    border: 2px solid black;
+}
+
+#buttonsDiv {
+    text-align: left;
+    width: 95vw;
+    margin: 0 auto;
+}
+
+#editorDiv {
+    background-color: antiquewhite;
+    border: 1px solid blue;
+    width: 95vw;
+    margin: 0 auto;
+    height: 550px;
+}
+
+.fa-solid {
+    font-size: 1.3em;
+    margin: 3px;
+}
+
+.DraftEditor-root {
+    padding: 10px;
+}
+
+
+
+/* New rich text editor CSS */
+
+.rdw-editor-toolbar > div {
+    display: inline-block;
+    width: 80px;
+    margin: 10px;
 }

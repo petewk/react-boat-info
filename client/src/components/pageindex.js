@@ -89,7 +89,7 @@ function PageIndex(){
             <div id="pageIndex">
 
                         {(fileNames.length === 0) ? (
-                            <p>Loading</p>
+                            <p>Get started using the 'Submit Form' button in the top right</p>
                         ): (
                             fileNames.map((item, i)=>(
                                 <div key={i}>
@@ -101,20 +101,21 @@ function PageIndex(){
             <div id="textPage">
                 {fileCurr === '' ? (
                     <>
-                    <h2>Welcome to the boat info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                    <h2 id='welcomeTitle'>Welcome to the boat info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
                     </>
                 ) : (
                     edit ? (
                         <Form editing='true' fileName={fileNames[fileNames.indexOf(fileCurr)]} fileText={fileConts[fileNames.indexOf(fileCurr)]}/>
                     ) : (
-                        <>
-                        <h1>
-                            {fileTitle}
-                        </h1>
-                        <h2 dangerouslySetInnerHTML={{__html: bodyHTML}}></h2>
+                        <div id="infoPageBody">
+                            <h1>
+                                {fileTitle}
+                            </h1>
+                            <button id='editButton' onClick={enableEdit}>Edit text</button>
+                            <div id="infoPageText" dangerouslySetInnerHTML={{__html: bodyHTML}}></div>
 
-                        <button onClick={enableEdit}>Edit text</button>
-                    </>
+                            
+                        </div>
                     )
                 )
                     }

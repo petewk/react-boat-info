@@ -4,6 +4,7 @@ import {stateToHTML} from 'draft-js-export-html';
 import '../App.css';
 import '../../node_modules/draft-js/dist/Draft.css';
 import DisplayEditor from './displayEditor.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class MyEditor extends React.Component {
     constructor(props){
@@ -63,35 +64,46 @@ class MyEditor extends React.Component {
             })
         }
     }
+    
 
 
     render(){
         return(
             <>
                 <form action="http://localhost:5000/rich" method="POST">
+
                     <input id="hiddenForm" name="hiddenForm"></input>
-                    <input name="fileName" placeholder='Put the file name here'></input>
-                    <button>Submit this to server</button>
-                </form>
-                <div id="editorDiv">
-                    <div>
-                        <button onClick={()=>this.handleKeyCommand("bold")}>Bold</button>
-                        <button onClick={()=>this.handleKeyCommand("italic")}>Italic</button>
-                        <button onClick={()=>this.handleKeyCommand("underline")}>Underline</button>
-                        <button onClick={()=>this.handleKeyCommand("code")}>Code</button>
+                    <input id="nameInput" name="fileName" placeholder='-- Page Title --'></input>
+                    <h5>(The page title will show as the index link for the page)</h5>
+
+             
+                    <div id="buttonsDiv">
+                        <button type="button" onClick={()=>this.handleKeyCommand("bold")}><i className="fa-solid fa-bold xl"></i></button>
+                        <button type="button" onClick={()=>this.handleKeyCommand("italic")}><i className="fa-solid fa-italic"></i></button>
+                        <button type="button" onClick={()=>this.handleKeyCommand("underline")}><i className="fa-solid fa-underline"></i></button>
+                        <button type="button" onClick={()=>this.handleKeyCommand("code")}><i className="fa-solid fa-code"></i></button>
                     </div>
 
-                <   div>
+                <div id="editorDiv">
+                    
+                    <div style={{height: 'inherit'}}>
                         <Editor 
+                            style={{height: 'inherit'}}
                             editorState={this.state.editorState} 
                             onChange={this.onChange} 
                             handleKeyCommand={this.handleKeyCommand.bind(this)}
+                            placeholder="Type out your text body here"
                             />
-                        <button onClick={this.saveContent}>Save</button>
+
                     </div>
 
-                    <DisplayEditor currentState={this.gettoHTML()}/>
+
                 </div>
+                {/* <DisplayEditor currentState={this.gettoHTML()}/> <br /> */}
+                <button onClick={this.saveContent}>Save</button> <br />
+                </form>
+                
+
             </>
         )
     }

@@ -26,7 +26,6 @@ function App(){
                         ):(
                             <>
                             <Link className="navLink" to="form" onClick={showForm}>Submit form</Link>
-                            <Link className="navLink"></Link>
                             <Link className="navLink">Suggest</Link>
                             </>
                         )}

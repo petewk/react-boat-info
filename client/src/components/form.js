@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../../node_modules/draft-js/dist/Draft.css';
+<<<<<<< Updated upstream
 import MyEditor from './editor.js';
+=======
+import Editor from './lexical.js';
+>>>>>>> Stashed changes
 
 function Form(props){
 
@@ -46,6 +50,7 @@ function Form(props){
                 </>
             ) : (
                <> 
+<<<<<<< Updated upstream
                     <h1>Write new page</h1>
                     <MyEditor />
                     {/* <h3>Here you can create a new page of info to be viewed. The title you set will be how the page shows on the Index on the left hand side of the main page, and the text content entered into the text area will be the body</h3>
@@ -59,6 +64,11 @@ function Form(props){
 
                         <button>Submit new page</button> */}
                     {/* </form> */}
+=======
+                    <h1>Write a new page below</h1>
+                    <Editor />
+
+>>>>>>> Stashed changes
 
                 </>
             )}

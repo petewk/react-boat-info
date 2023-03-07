@@ -74,4 +74,107 @@ header {
     width: 50vw;
     margin: 0 auto;
     height: 400px;
+<<<<<<< Updated upstream
 }
+=======
+}
+
+
+/* Main info page styling */
+
+#infoPageBody {
+    width: 75vw;
+    margin: 0 auto 0 75px;
+}
+
+#infoPageBody > h1 {
+    margin: 50px 0;
+}
+
+#editButton{
+    position: relative;
+    right: 5vw;
+    float: right;
+    top: -85px;
+}
+
+#textPage {
+    display: inline-block;
+    width: 78.5vw;
+    float: left;
+}
+
+
+/* Input submit page styling */
+
+#nameInput {
+    width: 20vw;
+    min-width: 400px;
+    font-size: 1.2em;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px auto 0 auto;
+}
+
+#formBody {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#hiddenForm { 
+    display: none;
+}
+
+#textEditor {
+    border: 2px solid black;
+}
+
+#buttonsDiv {
+    text-align: left;
+    width: 95vw;
+    margin: 0 auto;
+}
+
+#editorDiv {
+    background-color: antiquewhite;
+    border: 1px solid blue;
+    width: 95vw;
+    margin: 0 auto;
+    height: 550px;
+}
+
+.fa-solid {
+    font-size: 1.3em;
+    margin: 3px;
+}
+
+.DraftEditor-root {
+    padding: 10px;
+}
+
+
+/* Lexical CSS */
+
+.ltr {
+    text-align: left;
+  }
+  
+  .rtl {
+    text-align: right;
+  }
+  
+  .editor-placeholder {
+    color: #999;
+    overflow: hidden;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    user-select: none;
+    pointer-events: none;
+  }
+  
+  .editor-paragraph {
+    margin: 0 0 15px 0;
+    position: relative;
+  }
+>>>>>>> Stashed changes

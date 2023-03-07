@@ -4,11 +4,24 @@
   "proxy": "http://localhost:5000/",
   "private": true,
   "dependencies": {
+<<<<<<< Updated upstream
+=======
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@lexical/react": "^0.8.1",
+>>>>>>> Stashed changes
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
+<<<<<<< Updated upstream
+=======
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0",
+    "lexical": "^0.8.1",
+>>>>>>> Stashed changes
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",

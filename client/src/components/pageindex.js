@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, h2, NavLink } from 'react-router-dom';
 import '../App.css';
 import Form from './form.js';
-import MyEditor from './editor.js';
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, convertFromHTML } from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 

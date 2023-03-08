@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../node_modules/draft-js/dist/Draft.css';
-<<<<<<< Updated upstream
-import MyEditor from './editor.js';
-=======
-import Editor from './lexical.js';
->>>>>>> Stashed changes
+import Editor from './tiptap/Editor';
+
 
 function Form(props){
 
@@ -50,25 +47,8 @@ function Form(props){
                 </>
             ) : (
                <> 
-<<<<<<< Updated upstream
-                    <h1>Write new page</h1>
-                    <MyEditor />
-                    {/* <h3>Here you can create a new page of info to be viewed. The title you set will be how the page shows on the Index on the left hand side of the main page, and the text content entered into the text area will be the body</h3>
-
-                    <form action="http://localhost:5000/" method="post">
-                        <label htmlFor="fileName">Page Title</label><br />
-                        <input className="fileName" type="text" name="fileName" placeholder="Page title"/><br />
-                        <label htmlFor="fileBody">Info body</label><br />
-                        
-                        <textarea className="fileBody" name="fileBody" placeholder="Input text body here"></textarea><br />
-
-                        <button>Submit new page</button> */}
-                    {/* </form> */}
-=======
                     <h1>Write a new page below</h1>
                     <Editor />
-
->>>>>>> Stashed changes
 
                 </>
             )}

@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, h2, NavLink } from 'react-router-dom';
 import '../App.css';
 import Form from './form.js';
-import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, convertFromHTML } from 'draft-js';
-import {stateToHTML} from 'draft-js-export-html';
+
+
+// Lexical imports
+
+import { Color } from '@tiptap/extension-color'
+import Bold from '@tiptap/extension-bold';
+import Paragraph from '@tiptap/extension-paragraph';
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import {Underline} from '@tiptap/extension-underline'
+import { EditorContent, useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { generateHTML } from '@tiptap/react';
+
 
 function PageIndex(){
 
@@ -13,7 +25,6 @@ function PageIndex(){
     const [fileCurr, setFileCurr] = useState('');
     const [edit, setEdit] = useState(false);
     const [jsonCont, setJsonCont] = useState([{}]);
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [bodyHTML, setBodyHTML] = useState("");
     const [fileTitle, setFileTitle] = useState('');
 
@@ -40,27 +51,25 @@ function PageIndex(){
         setFileTitle(fileNametemp);
 
         //take that file contents and retrieve to HTML
-
-        const rawEditorData = JSON.parse(fileConts[fileNames.indexOf(e.target.attributes.fileName.value)]);
-        if (rawEditorData !== null){
-            const contentState = convertFromRaw(rawEditorData);
-            const newEditorState = EditorState.createWithContent(contentState);
-            setEditorState(newEditorState)        
-        };
+        var fileBody = fileConts[fileNames.indexOf(fileNametemp)]
+        console.log(fileConts[1]);
+        console.log(fileNames);
+        var fileName = fileNametemp.replaceAll(' ', "-") + '.json';
+        setBodyHTML(generateHTML(JSON.parse(fileConts[fileNames.indexOf(fileName)]), [
+            Color,
+            TextStyle,
+            Underline,
+            StarterKit,
+        ]))
 
     }
 
     // set content body here on effect hook to force on re-render
 
     useEffect(()=>{
-        setContentHTML()
+        
     });
 
-
-    function setContentHTML(){
-        const content = editorState.getCurrentContent();
-        setBodyHTML(stateToHTML(content));
-    }
     
 
     // enable editing mode to change contents of existing file
@@ -110,7 +119,7 @@ function PageIndex(){
                         <h1>
                             {fileTitle}
                         </h1>
-                        <h2 dangerouslySetInnerHTML={{__html: bodyHTML}}></h2>
+                        <div dangerouslySetInnerHTML={{__html: bodyHTML}}></div>
 
                         <button onClick={enableEdit}>Edit text</button>
                     </>

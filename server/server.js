@@ -49,12 +49,13 @@ app.post("/", (req, res)=>{
 
 
 app.post("/rich", (req, res)=>{
-    const body = JSON.parse(req.body.hiddenForm);
-    console.log(body);
+    const body = req.body.hiddenForm;
+    
     const fileName = req.body.fileName.replace(/\s/g, "-");
+    console.log(fileName);
+    console.log(body);
     fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
         if (err) throw err;
-        console.log("New file created")
     })
     res.redirect("http://localhost:3000")
 })

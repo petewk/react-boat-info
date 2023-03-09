@@ -1,49 +1,69 @@
+:root {
+    --piperDarkBlue: #0b3c62;
+    --piperMidBrown: #a58d6f;
+  }
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 header {
-    height: 8vh;
+    height: 10vh;
 }
 
 #container {
-    height: 89vh;
+    height: 90vh;
 }
 
 #navBar {
-    background-color:aquamarine
+    background-color:var(--piperDarkBlue);
+    height: inherit;
+    color: var(--piperMidBrown);
+}
+
+.navLink {
+    color: var(--piperMidBrown);
 }
 
 #logo {
     display: inline-block;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-left: 40px;
+    padding-top: 1vh;
+    font-size: 1.8em;
 }
 
 #links {
     display: inline-block;
     float: right;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .navLink, .indexLink {
     margin: 30px 20px;
     text-decoration: underline;
-    color: blue;
+
 }
 
+.indexLink {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin: 20px 0 5px 10px;
+    overflow-wrap: break-word;
+    padding: 3px;
+}
 
 #pageIndex {
+    width: 200px;
+    min-width:fit-content;
     background-color: lightgray;
-    width: 20vw;
+    max-width: 17vw;
     float: left;
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-}
-
-#formBody {
-    width: 80vw;
-    margin: 0 auto;
-    text-align: center;
-}
-
-#hiddenForm { 
-    display: none;
+    padding-top: 30px;
 }
 
 .fileName {
@@ -56,17 +76,13 @@ header {
     height: 400px;
 }
 
-#textEditor {
-    border: 2px solid black;
+
+#welcomeTitle {
+    text-align: center;
+    width: 75vw;
+    margin-top: 40px;
 }
 
-#editorDiv {
-    background-color: antiquewhite;
-    border: 1px solid blue;
-    width: 50vw;
-    margin: 0 auto;
-    height: 400px;
-}
 
 #displayDiv {
     background-color: whitesmoke;
@@ -150,39 +166,11 @@ header {
 }
 
 
-/* Lexical CSS */
 
-.ltr {
-    text-align: left;
-  }
-  
-  .rtl {
-    text-align: right;
-  }
-  
-  .editor-placeholder {
-    color: #999;
-    overflow: hidden;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    user-select: none;
-    pointer-events: none;
-  }
-  
-  .editor-paragraph {
-    margin: 0 0 15px 0;
-    position: relative;
-  }
+/* New rich text editor CSS */
 
-
-  .contentEditableBody {
-    height: 500px;
-    width: 60vw;
-    margin: 0 auto;
-  }
-
-  .lexicalPlaceholder {
-    position: relative;
-    top: -400px;
-  }
+.rdw-editor-toolbar > div {
+    display: inline-block;
+    width: 80px;
+    margin: 10px;
+}

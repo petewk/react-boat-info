@@ -1,11 +1,14 @@
 .ProseMirror {
   margin-top: 20px;
-  height:500px;
+  height:60vh;
   border: 2px solid darkblue;
   border-radius: 3px;
   text-align: left;
   padding: 5px;
   line-height: 0.8rem;
+  width: 80vw;
+  margin: 0 auto;
+
 
     > * + * {
       margin-top: 0.75em;
@@ -61,3 +64,9 @@
       margin: 2rem 0;
     }
   }
+
+#editorToolbar {
+  margin: 10px auto;
+  text-align: left;
+  width: 80vw;
+}

@@ -1,12 +1,17 @@
 import './tiptap.scss'
 
 import { Color } from '@tiptap/extension-color'
+import Bold from '@tiptap/extension-bold';
+import Paragraph from '@tiptap/extension-paragraph';
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import {Underline} from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { generateHTML } from '@tiptap/react';
+
+
 
 
 const MenuBar = ({ editor }) => {
@@ -17,7 +22,7 @@ const MenuBar = ({ editor }) => {
 
 
   return (
-    <>
+    <div id="editorToolbar">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={
@@ -60,37 +65,37 @@ const MenuBar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
       >
-        h1
+        H1
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
       >
-        h2
+        H2
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
       >
-        h3
+        H3
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
         className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
       >
-        h4
+        H4
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
         className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
       >
-        h5
+        H5
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
         className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
       >
-        h6
+        H6
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -137,13 +142,13 @@ const MenuBar = ({ editor }) => {
       >
         redo
       </button>
-    </>
+    </div>
   )
 }
 
-export default () => {
+const Editor = () => {
 
-  const [contentState, setContentState] = useState({});
+  const [contentState, setContentState] = useState();
 
   const editor = useEditor({
     extensions: [
@@ -161,25 +166,42 @@ export default () => {
         },
       }),
     ],
+
     onUpdate({editor}){
-        setContentState(editor.getJSON())
-    }
+        setContentState(editor.getJSON());
+        const input = document.getElementById("hiddenForm");
+        input.value = JSON.stringify(editor.getJSON());
 
-    
+        
+
+    },
    
-  })
+  });
 
-  function logCheck(){
-    console.log({contentState})
-  };
-
-
+  
 
   return (
     <div>
-      <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
-      <button onClick={()=>{logCheck()}}>Click to check</button>
+        <form action="http://localhost:5000/rich" method="POST">
+            <input placeholder='Set File Name Here' name="fileName"></input>
+            <input id="hiddenForm" name="hiddenForm"></input> <br />
+            <button>Type text below then Click to submit file</button>
+        </form>
+            <MenuBar editor={editor} />
+            <EditorContent editor={editor} />
+  
+{/* 
+             {
+                generateHTML(contentState, [
+                    Color,
+                    TextStyle,
+                    Underline,
+                    StarterKit,
+                ])
+                }  */}
+
     </div>
   )
 }
+
+export default Editor;

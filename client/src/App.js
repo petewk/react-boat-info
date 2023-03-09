@@ -22,7 +22,7 @@ function App(){
                         
                         <div id="links">
                         {submitForm ? (
-                            <Link onClick={showForm}> Return</Link>
+                            <Link onClick={showForm} className="navLink"> Return</Link>
                         ):(
                             <>
                             <Link className="navLink" to="form" onClick={showForm}>Submit form</Link>

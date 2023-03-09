@@ -50,10 +50,7 @@ app.post("/", (req, res)=>{
 
 app.post("/rich", (req, res)=>{
     const body = req.body.hiddenForm;
-    
     const fileName = req.body.fileName.replace(/\s/g, "-");
-    console.log(fileName);
-    console.log(body);
     fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
         if (err) throw err;
     })

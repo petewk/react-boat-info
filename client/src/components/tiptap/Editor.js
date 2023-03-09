@@ -1,5 +1,6 @@
 import './tiptap.scss'
 
+
 import { Color } from '@tiptap/extension-color'
 import Bold from '@tiptap/extension-bold';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -8,16 +9,55 @@ import TextStyle from '@tiptap/extension-text-style'
 import {Underline} from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { generateHTML } from '@tiptap/react';
+import Link from '@tiptap/extension-link';
+import Dropcursor from '@tiptap/extension-dropcursor';
+import Image from '@tiptap/extension-image';
+
+
+
 
 
 
 
 const MenuBar = ({ editor }) => {
+
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+      .run()
+  }, [editor])
+
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run()
+    }
+  }, [editor])
+
   if (!editor) {
     return null
   }
+  
+
 
 
 
@@ -34,7 +74,7 @@ const MenuBar = ({ editor }) => {
         }
         className={editor.isActive('bold') ? 'is-active' : ''}
       >
-        bold
+        <i className="fa-solid fa-bold"></i>
       </button>
       <button 
         onClick={()=> editor.chain().focus().toggleUnderline().run()}
@@ -46,7 +86,7 @@ const MenuBar = ({ editor }) => {
                 .run()
         }
       >
-        underline
+        <i className="fa-solid fa-underline"></i>
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -59,13 +99,13 @@ const MenuBar = ({ editor }) => {
         }
         className={editor.isActive('italic') ? 'is-active' : ''}
       >
-        italic
+        <i className="fa-solid fa-italic"></i>
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
       >
-        H1
+       H1
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
@@ -77,7 +117,7 @@ const MenuBar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
       >
-        H3
+       H3
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
@@ -101,13 +141,13 @@ const MenuBar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive('bulletList') ? 'is-active' : ''}
       >
-        bullet list
+        <i className="fa-solid fa-list-ul"></i>
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive('orderedList') ? 'is-active' : ''}
       >
-        ordered list
+        <i className="fa-solid fa-list-ol"></i>
       </button>
       {/* <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -118,6 +158,15 @@ const MenuBar = ({ editor }) => {
       <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         horizontal rule
       </button> */}
+       <button onClick={setLink} className={editor.isActive('link') ? 'is-active' : ''}>
+        setLink
+      </button>
+      <button
+        onClick={() => editor.chain().focus().unsetLink().run()}
+        disabled={!editor.isActive('link')}
+      >
+        unsetLink
+      </button>
       <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={
@@ -128,7 +177,7 @@ const MenuBar = ({ editor }) => {
             .run()
         }
       >
-        undo
+        <i className="fa-solid fa-rotate-left"></i>
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
@@ -140,8 +189,9 @@ const MenuBar = ({ editor }) => {
             .run()
         }
       >
-        redo
+        <i className="fa-solid fa-rotate-right"></i>
       </button>
+      <button onClick={addImage}>setImage</button>
     </div>
   )
 }
@@ -165,7 +215,14 @@ const Editor = () => {
           keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
         },
       }),
+      Link.configure({
+        openOnClick: true,
+      }),
+      Image,
+      Dropcursor,
     ],
+
+    
 
     onUpdate({editor}){
         setContentState(editor.getJSON());
@@ -189,16 +246,7 @@ const Editor = () => {
         </form>
             <MenuBar editor={editor} />
             <EditorContent editor={editor} />
-  
-{/* 
-             {
-                generateHTML(contentState, [
-                    Color,
-                    TextStyle,
-                    Underline,
-                    StarterKit,
-                ])
-                }  */}
+
 
     </div>
   )

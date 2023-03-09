@@ -115,6 +115,19 @@ header {
     display: inline-block;
     width: 78.5vw;
     float: left;
+    margin-left: 30px;
+}
+
+#textPage a {
+    color: var(--piperDarkBlue);
+    transition: .3s;
+}
+
+#textPage a:hover {
+    background-color: beige;
+    border-radius: 5px;
+    transition: .3s
+
 }
 
 
@@ -164,6 +177,7 @@ header {
 .DraftEditor-root {
     padding: 10px;
 }
+
 
 
 

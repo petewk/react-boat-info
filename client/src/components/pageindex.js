@@ -15,6 +15,8 @@ import {Underline} from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { generateHTML } from '@tiptap/react';
+import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image'
 
 
 function PageIndex(){
@@ -52,14 +54,14 @@ function PageIndex(){
 
         //take that file contents and retrieve to HTML
         var fileBody = fileConts[fileNames.indexOf(fileNametemp)]
-        console.log(fileConts[1]);
-        console.log(fileNames);
         var fileName = fileNametemp.replaceAll(' ', "-") + '.json';
         setBodyHTML(generateHTML(JSON.parse(fileConts[fileNames.indexOf(fileName)]), [
             Color,
             TextStyle,
             Underline,
             StarterKit,
+            Link,
+            Image,
         ]))
 
     }

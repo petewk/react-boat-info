@@ -245,11 +245,16 @@ const EntryPage = () => {
             <input className="createFormInput" name="authCode" id="authCodeInput"  placeholder='Enter auth code here' type="number" required></input>
             <h5>This will be needed to save the page</h5>
 
-            <input className="createFormInput" id="fileNameInput" placeholder='Set File Name Here' defaultValue={pageTitle} name="fileName"></input>
+            <input className="createFormInput" id="fileNameInputEdit" placeholder='Set File Name Here' defaultValue={pageTitle} name="fileName"></input>
+            
+            <div id="tooltip">Keeping the file name the same will overwrite the existing file with the same name. <br/>
+              Changing the file name will create a seperate page with the content below
+            </div>
 
             <input  id="hiddenForm" name="hiddenForm"></input> <br />
 
             <button>Click to submit file</button>
+
         </form>
             <MenuBar editor={editor} />
             <EditorContent editor={editor} />

@@ -6,6 +6,7 @@ import Success from './components/success';
 import Failure from './components/failure';
 import Editor from './components/tiptap/EditorPage';
 import EntryPage from './components/tiptap/EntryPage.js';
+import SuggestPage from './components/suggest.js';
 
 
 function App(){
@@ -31,11 +32,10 @@ function App(){
                         ):(
                             <>
                             <Link className="navLink" to="submit" onClick={showForm}>Submit form</Link>
-                            <Link className="navLink">Suggest</Link>
+                            <Link className="navLink" to="/suggest">Suggest</Link>
                             </>
                         )}
                         </div>
-
                     </nav>
                 </header>
 
@@ -46,6 +46,7 @@ function App(){
                     <Route path="success" element={<Success />}/>
                     <Route path="failure" element={<Failure />}/>
                     <Route path="/submit" element={<EntryPage/>}/>
+                    <Route path="/suggest" element={<SuggestPage />}/>
                 </Routes>
 
 

@@ -247,7 +247,7 @@ const EntryPage = () => {
 
             <input  id="hiddenForm" name="hiddenForm"></input> <br />
 
-            <button>Click to submit file</button>
+            <button>SAVE</button>
         </form>
             <MenuBar editor={editor} />
             <EditorContent editor={editor} />

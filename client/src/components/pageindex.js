@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, h2, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, h2, NavLink, Link } from 'react-router-dom';
 import '../App.css';
-import Form from './form.js';
 
 
 // Lexical imports
@@ -15,7 +14,7 @@ import {Underline} from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { generateHTML } from '@tiptap/react';
-import Link from '@tiptap/extension-link';
+import {Link as Link1} from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image'
 
 
@@ -53,24 +52,26 @@ function PageIndex(){
         setFileTitle(fileNametemp);
 
         //take that file contents and retrieve to HTML
-        var fileBody = fileConts[fileNames.indexOf(fileNametemp)]
+        var fileBody = fileConts[fileNames.indexOf(fileNametemp)];
         var fileName = fileNametemp.replaceAll(' ', "-") + '.json';
         setBodyHTML(generateHTML(JSON.parse(fileConts[fileNames.indexOf(fileName)]), [
             Color,
             TextStyle,
             Underline,
             StarterKit,
-            Link,
+            Link1,
             Image,
         ]))
 
+        // store this info to local storage for the editor option
+
     }
 
-    // set content body here on effect hook to force on re-render
 
     useEffect(()=>{
-        
-    });
+        window.localStorage.setItem("editorTextBody", bodyHTML);
+        window.localStorage.setItem("editorFileName", fileTitle);
+    })
 
     
 
@@ -80,22 +81,15 @@ function PageIndex(){
         setEdit(!edit);
     }
 
-    function EditFile(){
-        useEffect(()=>{
-            fetch("/edit")
-            .then(
-                response => response.json()
-            ).then(
-                data => console.log(data)
-            )
-        })
-    }
 
     
 
 
     return (
         <div id="container">
+
+            {/* Page index list here */}
+
             <div id="pageIndex">
 
                         {(fileNames.length === 0) ? (
@@ -108,26 +102,30 @@ function PageIndex(){
                             ))
                         )}
             </div>  
+
+
+            {/* Text and body going here */}
+
             <div id="textPage">
                 {fileCurr === '' ? (
                     <>
                     <h2>Welcome to the boat info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
                     </>
                 ) : (
-                    edit ? (
-                        <Form editing='true' fileName={fileNames[fileNames.indexOf(fileCurr)]} fileText={fileConts[fileNames.indexOf(fileCurr)]}/>
-                    ) : (
-                        <>
+                    
+                    <>
                         <h1>
                             {fileTitle}
                         </h1>
                         <div dangerouslySetInnerHTML={{__html: bodyHTML}}></div>
 
-                        <button onClick={enableEdit}>Edit text</button>
+                        <Link to="/edit">
+                        <button id="editButton">Edit text</button>
+                        </Link>
+                        
                     </>
                     )
-                )
-                    }
+                }
                 
             </div>
         </div>

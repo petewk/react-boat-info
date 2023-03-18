@@ -6,6 +6,14 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+const mysql = require('mysql2');
+const db = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'mysqlroot4691!',
+    database:   'change_log'
+})
+
 
 
 
@@ -49,14 +57,43 @@ app.post("/", (req, res)=>{
 
 
 app.post("/rich", (req, res)=>{
-    const body = JSON.parse(req.body.hiddenForm);
-    console.log(body);
+    const body = req.body.hiddenForm;
     const fileName = req.body.fileName.replace(/\s/g, "-");
-    fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
-        if (err) throw err;
-        console.log("New file created")
-    })
-    res.redirect("http://localhost:3000")
+    const authCode = req.body.authCode;
+
+
+
+
+    // CHECK AUTH CODE USED HERE
+
+    authQuery = "SELECT * FROM user_ids WHERE user_id = ?"
+    db.query(authQuery, [authCode], (req, response)=>{
+        console.log(response.length);
+        if(response.length===0){
+            res.redirect("http://localhost:3000/failure")
+        } else {
+            res.redirect("http://localhost:3000/success");
+
+            fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
+                if (err) throw err;
+            });
+
+            const date = new Date();
+            const sqlInsert = "INSERT INTO create_log (create_date, file_name, user_id) VALUES (?,?,?)"
+
+            db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
+
+                if (err){console.log(err)} 
+
+  
+            });
+
+        }
+    });
+
+    // SQL INSTER SECTION HERE
+
+    
 })
 
 app.listen(5000, ()=>{

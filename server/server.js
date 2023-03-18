@@ -61,7 +61,6 @@ app.post("/rich", (req, res)=>{
     const fileName = req.body.fileName.replace(/\s/g, "-");
     const authCode = req.body.authCode;
 
-    // WRITING THE FILE AS JSON HERE
 
 
 

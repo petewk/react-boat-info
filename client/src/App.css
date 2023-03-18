@@ -95,6 +95,31 @@ header {
 }
 
 
+
+/* Collapse Styling */
+
+.collapsible {
+    max-height: 400px;
+    height: 400px;
+    overflow-y: scroll; 
+    transition: .3s;
+    background-color: #c5c5df;
+}
+
+.collapsed {
+    height: 0px;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.collapsible::-webkit-scrollbar {
+    display: none;
+  }
+
+.rotated {
+    transform: rotate(180deg);
+}
+
 /* Main info page styling */
 
 #infoPageBody {

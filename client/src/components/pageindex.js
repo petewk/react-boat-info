@@ -25,9 +25,10 @@ function PageIndex(){
     const [fileConts, setFileConts] = useState([]);
     const [fileCurr, setFileCurr] = useState('');
     const [edit, setEdit] = useState(false);
-    const [jsonCont, setJsonCont] = useState([{}]);
     const [bodyHTML, setBodyHTML] = useState("");
     const [fileTitle, setFileTitle] = useState('');
+    const [searchResult, setSearchResult] = useState('');
+    const [searchValue, setSearchValue] = useState('');
 
 
     useEffect(()=>{
@@ -81,6 +82,27 @@ function PageIndex(){
         setEdit(!edit);
     }
 
+    function searchFilter(e){
+        const search = e.target.value;
+        setSearchValue(search);
+        const searchResults = [];
+        fileNames.filter((item)=>{
+            if(item.toLowerCase().includes(search)){
+                searchResults.push(item);
+            };
+        })
+        
+        setSearchResult(searchResults);
+        console.log(searchResults);
+    }
+
+    function collapseTest(e){
+        const clickTarget = e.target.nextElementSibling;
+        clickTarget.classList.toggle('collapsed');
+        const arrow = document.getElementsByClassName('fa-sort-down')[0];
+        arrow.classList.toggle('rotated');
+    }
+
 
     
 
@@ -91,15 +113,49 @@ function PageIndex(){
             {/* Page index list here */}
 
             <div id="pageIndex">
+                <div>
+                    <input id="searchBox" placeholder="Search..." onChange={searchFilter}></input>
+                </div>
 
                         {(fileNames.length === 0) ? (
-                            <p>Loading</p>
+                            // Render when no files to show
+
+                            <p>Loading</p> 
+
                         ): (
-                            fileNames.map((item, i)=>(
-                                <div key={i}>
-                                    <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
-                                </div>
-                            ))
+
+                            <div>
+                                {
+                                (searchValue === '') ? (
+                                
+                                
+                                // Render when files but no search
+                                <>
+                                    <p onClick={collapseTest}>Test Items <i className="fa-solid fa-sort-down"></i></p>
+                                    <div id="testCollapse" className="testItems collapsible">
+                                    {fileNames.map((item, i)=>(
+                                        <div key={i} >
+                                            <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                        </div>
+                                    ))}</div></>
+                            ) : (
+
+                                (searchResult.length === 0 ) ? (
+
+                                    // Render when search but no results
+                                    <p>No results found...</p>
+                                ) :
+
+                                    // Render when search with results
+                                (
+                                searchResult.map((item, i)=>(
+                                    <div key={i} className="collapse">
+                                        <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                    </div>
+                                )
+                                ))
+                            )
+                                }</div>            
                         )}
             </div>  
 

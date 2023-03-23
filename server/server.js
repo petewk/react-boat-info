@@ -6,45 +6,58 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const mysql = require('mysql2');
-const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'mysqlroot4691!',
-    database:   'change_log'
-})
-
 
 
 
 app.get("/api", (req, res)=>{
 
-    // making json of filename, text pairs
+    // This creates object of directories and files for the index
+
     var filesFull = {};
+    var directories = [];
+    var directoriesFiles = {};
 
     fs.readdirSync(__dirname + '/textfiles').forEach(
         (curr, index)=>{
-            txtval = curr.replace('.txt', '');
-            data = fs.readFileSync(__dirname + '/textfiles/' + curr, 'utf8')
-            filesFull[txtval] = data;
+            directories.push(curr)
+        }
+    )
+
+    directories.forEach((curr, index)=>{
+        directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
+        directoriesFiles[curr].forEach((item, index)=>{
+            filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')
         });
 
-    var filesFullOrdered = Object.keys(filesFull).sort();
-
-    res.json(filesFull);
+        
 
     });
 
+    console.log(filesFull);
+
+    res.json({directoryInfo: directoriesFiles, fileBodies: filesFull});
+
+    // This creates two arrays of all filenames and all file contents
+
+    });
+
+
+
 app.post("/", (req, res)=>{
 
-    console.log("Plain text request")
-    var existingFiles = fs.readdirSync(__dirname + '/textfiles');
-    toDelete = req.body.toDelete + '.txt';
-    if (existingFiles.includes(toDelete)){
-        fs.unlinkSync('./textFiles/' + toDelete, (err)=>{
-            if (err) throw err;
-        })
-    }
+    // To delete files?not sure 
+
+
+    // var existingFiles = fs.readdirSync(__dirname + '/textfiles');
+    // toDelete = req.body.toDelete + '.txt';
+    // if (existingFiles.includes(toDelete)){
+    //     fs.unlinkSync('./textFiles/' + toDelete, (err)=>{
+    //         if (err) throw err;
+    //     })
+    // }
+
+
+    // This part is creating files 
 
 
     var filename = req.body.fileName.replace(/\s/g, "")
@@ -57,43 +70,14 @@ app.post("/", (req, res)=>{
 
 
 app.post("/rich", (req, res)=>{
-    const body = req.body.hiddenForm;
+    const body = JSON.parse(req.body.hiddenForm);
+    console.log(body);
     const fileName = req.body.fileName.replace(/\s/g, "-");
-    const authCode = req.body.authCode;
-
-
-
-
-    // CHECK AUTH CODE USED HERE
-
-    authQuery = "SELECT * FROM user_ids WHERE user_id = ?"
-    db.query(authQuery, [authCode], (req, response)=>{
-        console.log(response.length);
-        if(response.length===0){
-            res.redirect("http://localhost:3000/failure")
-        } else {
-            res.redirect("http://localhost:3000/success");
-
-            fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
-                if (err) throw err;
-            });
-
-            const date = new Date();
-            const sqlInsert = "INSERT INTO create_log (create_date, file_name, user_id) VALUES (?,?,?)"
-
-            db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
-
-                if (err){console.log(err)} 
-
-  
-            });
-
-        }
-    });
-
-    // SQL INSTER SECTION HERE
-
-    
+    fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
+        if (err) throw err;
+        console.log("New file created")
+    })
+    res.redirect("http://localhost:3000")
 })
 
 app.listen(5000, ()=>{

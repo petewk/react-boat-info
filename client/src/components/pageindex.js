@@ -15,20 +15,38 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { generateHTML } from '@tiptap/react';
 import {Link as Link1} from '@tiptap/extension-link';
-import Image from '@tiptap/extension-image'
+import Image from '@tiptap/extension-image';
+import Dropcursor from '@tiptap/extension-dropcursor';
 
 
 function PageIndex(){
 
     const [backendData, setBackendData] = useState([{}]);
-    const [fileNames, setFileNames] = useState([]);
-    const [fileConts, setFileConts] = useState([]);
+
     const [fileCurr, setFileCurr] = useState('');
     const [edit, setEdit] = useState(false);
+
+    // Setting the text page contents
+    const [fileData, setFileData] = useState({});
     const [bodyHTML, setBodyHTML] = useState("");
     const [fileTitle, setFileTitle] = useState('');
+
+
+    //  Search function
     const [searchResult, setSearchResult] = useState('');
     const [searchValue, setSearchValue] = useState('');
+
+
+
+    // testing directories
+
+    const [directories, setDirectories] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [fileNames, setFileNames] = useState([]);
+
+    // full directories/files object
+    const [fullData, setFullData] = useState({});
+
 
 
     useEffect(()=>{
@@ -37,39 +55,67 @@ function PageIndex(){
             response => response.json()
         ).then(
             data => {
-                setFileNames(Object.keys(data));
-                setFileConts(Object.values(data));
+                setFullData(data.directoryInfo);
+                setDirectories(Object.keys(data.directoryInfo).sort());
+                setFileData(data.fileBodies)
+                
+                const holdingArrBodies = []
+                Object.values(data.fileBodies).map((value)=>{
+                        holdingArrBodies.push(value)
+                });
+
+                const holdingArrNames = [];
+                Object.keys(data.fileBodies).map((name)=>{
+                    holdingArrNames.push(name);
+                })
+                setFiles(holdingArrBodies);
+                setFileNames(holdingArrNames);
             }
             
         );
     }, []);
 
+    // function testState(){
+    //     console.log(Object.values(fullData));
+    //     var array = [];
+    //     Object.values(fullData).map((item)=>{
+    //         item.map((value)=>{
+    //             array.push(value);
+    //         })
+    //     });
+    // }
 
 
     function SetPage(e){
+
+        
         //get current file name and set current file
-        setFileCurr(e.target.attributes.fileName.value);
+        setFileCurr(e.target.attributes.filename.value);
         var fileNametemp = e.target.innerHTML;
         setFileTitle(fileNametemp);
+        
 
         //take that file contents and retrieve to HTML
-        var fileBody = fileConts[fileNames.indexOf(fileNametemp)];
-        var fileName = fileNametemp.replaceAll(' ', "-") + '.json';
-        setBodyHTML(generateHTML(JSON.parse(fileConts[fileNames.indexOf(fileName)]), [
+        console.log(fileData[fileCurr]);
+
+
+        setBodyHTML(generateHTML(JSON.parse(fileData[e.target.attributes.filename.value]), [
             Color,
             TextStyle,
             Underline,
             StarterKit,
             Link1,
             Image,
-        ]))
+            Dropcursor,
+        ]));
 
-        // store this info to local storage for the editor option
+        
 
     }
 
-
+    // store this info to local storage for the editor option
     useEffect(()=>{
+        
         window.localStorage.setItem("editorTextBody", bodyHTML);
         window.localStorage.setItem("editorFileName", fileTitle);
     })
@@ -83,28 +129,29 @@ function PageIndex(){
     }
 
     function searchFilter(e){
-        const search = e.target.value;
-        setSearchValue(search);
-        const searchResults = [];
-        fileNames.filter((item)=>{
-            if(item.toLowerCase().includes(search)){
-                searchResults.push(item);
-            };
+        const searchVal = e.target.value;
+        setSearchValue(searchVal);
+        const searchReturns = [];
+        fileNames.map((item)=>{
+            if(item.toLowerCase().includes(searchVal.toLowerCase())){
+                searchReturns.push(item)
+            }
         })
-        
-        setSearchResult(searchResults);
-        console.log(searchResults);
+        setSearchResult(searchReturns)
     }
 
     function collapseTest(e){
         const clickTarget = e.target.nextElementSibling;
         clickTarget.classList.toggle('collapsed');
-        const arrow = document.getElementsByClassName('fa-sort-down')[0];
+        const arrow = e.target.lastChild;
         arrow.classList.toggle('rotated');
     }
 
-
     
+    
+
+
+
 
 
     return (
@@ -117,45 +164,57 @@ function PageIndex(){
                     <input id="searchBox" placeholder="Search..." onChange={searchFilter}></input>
                 </div>
 
-                        {(fileNames.length === 0) ? (
+                        {(directories.length === 0) ? (
                             // Render when no files to show
 
                             <p>Loading</p> 
 
                         ): (
 
+                            (searchValue === '') ? (
+
                             <div>
-                                {
-                                (searchValue === '') ? (
-                                
-                                
-                                // Render when files but no search
+                                {/* Render when files but no search */}
+
                                 <>
-                                    <p onClick={collapseTest}>Test Items <i className="fa-solid fa-sort-down"></i></p>
-                                    <div id="testCollapse" className="testItems collapsible">
-                                    {fileNames.map((item, i)=>(
-                                        <div key={i} >
-                                            <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                    {directories.map((item, i)=>(
+                                        <div key={i}>
+                                            <p onClick={collapseTest}>{item} <i className="fa-solid fa-sort-down"></i></p>
+                                            <div className="testItems collapsible collapsed">
+                                                {fullData[item].map((name, i)=>(
+                                                    <div key={i}>
+                                                        <h5 className="indexLink" filename={name} onClick={SetPage}>{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    ))}</div></>
+                                    ))}
+                                </>
+
+                            </div>
+
                             ) : (
 
-                                (searchResult.length === 0 ) ? (
+                                // When search but no results
+                                (searchResult.length === 0) ? (
 
-                                    // Render when search but no results
-                                    <p>No results found...</p>
-                                ) :
+                                    <p>No Results Found...</p>
+                                ) 
 
-                                    // Render when search with results
+                                : 
+
+                                // When search and results to show
+
                                 (
-                                searchResult.map((item, i)=>(
-                                    <div key={i} className="collapse">
-                                        <h5  className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
-                                    </div>
+                                    searchResult.map((item, i)=>(
+                                        <div>
+                                            <h5 className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                        </div>
+                                    ))
                                 )
-                                ))
                             )
-                                }</div>            
+
+                    
                         )}
             </div>  
 
@@ -173,8 +232,7 @@ function PageIndex(){
                         <h1>
                             {fileTitle}
                         </h1>
-                        <div dangerouslySetInnerHTML={{__html: bodyHTML}}></div>
-
+                        <div dangerouslySetInnerHTML={{__html: bodyHTML}}>{}</div>
                         <Link to="/edit">
                         <button id="editButton">Edit text</button>
                         </Link>

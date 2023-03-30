@@ -199,6 +199,20 @@ const MenuBar = ({ editor }) => {
 const EntryPage = () => {
 
   const [contentState, setContentState] = useState();
+  const [categories, setCategories] = useState([])
+
+      useEffect(()=>{
+        fetch("/api")
+        .then(
+            response => response.json()
+        ).then(
+            data => {
+
+              setCategories(Object.keys(data.directoryInfo).sort())
+            }
+            
+        );
+    }, []);
 
   const editor = useEditor({
     extensions: [
@@ -243,9 +257,18 @@ const EntryPage = () => {
             <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
             <h5>This will be needed to save the page</h5>
 
-            <input className="createFormInput" id="fileNameInput" placeholder='Set File Name Here' name="fileName"></input>
+            <input className="createFormInput" id="fileNameInput" placeholder='Set File Name Here' name="fileName"></input> <br />
 
-            <input  id="hiddenForm" name="hiddenForm"></input> <br />
+            <select name="category" id="categorySelect" required>
+              <option disabled selected hidden>Please Choose a Category...</option>
+              {
+                categories.map((item, index)=>(
+                  <option value={item}>{item[0].toUpperCase() + item.substring(1).replaceAll("-", " ")}</option>
+                ))
+              }
+            </select>
+
+            <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
 
             <button>SAVE</button>
         </form>

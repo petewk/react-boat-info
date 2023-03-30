@@ -68,6 +68,10 @@ header {
     padding-top: 30px;
 }
 
+.directoryHeader {
+    padding: 0px 10px;
+}
+
 .fileName {
     width: 300px;
     text-align: center;
@@ -116,9 +120,24 @@ header {
     display: none;
   }
 
+.fa-solid {
+    font-size: 1.3em;
+    margin: 0px 10px;
+}
+
 .rotated {
     transform: rotate(180deg);
+    animation: spinup .2s forwards ease-in;
 }
+
+@keyframes spinup{
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(180deg)
+    }
+};
 
 /* Main info page styling */
 
@@ -208,7 +227,7 @@ input::-webkit-inner-spin-button {
     text-align: center;
 }
 
-#hiddenForm { 
+.hiddenForm { 
     display: none;
 }
 
@@ -242,10 +261,8 @@ input::-webkit-inner-spin-button {
     height: 525px;
 }
 
-.fa-solid {
-    font-size: 1.3em;
-    margin: 0px;
-}
+
+
 
 .DraftEditor-root {
     padding: 10px;
@@ -300,6 +317,11 @@ input::-webkit-inner-spin-button {
     transition: 0.3s;
 }
 
+#categorySelect {
+    width: 20vw;
+    margin: 10px;
+}
+
 
 /* New rich text editor CSS */
 
@@ -311,6 +333,11 @@ input::-webkit-inner-spin-button {
 
 
 /* Results pages */
+
+#searchBox {
+    margin: 5px;
+    width: 90%;
+}
 
 .resultPage {
     width: 50vw;

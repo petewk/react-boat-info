@@ -33,11 +33,7 @@ app.get("/api", (req, res)=>{
 
     });
 
-    console.log(filesFull);
-
     res.json({directoryInfo: directoriesFiles, fileBodies: filesFull});
-
-    // This creates two arrays of all filenames and all file contents
 
     });
 
@@ -71,11 +67,9 @@ app.post("/", (req, res)=>{
 
 app.post("/rich", (req, res)=>{
     const body = JSON.parse(req.body.hiddenForm);
-    console.log(body);
     const fileName = req.body.fileName.replace(/\s/g, "-");
-    fs.writeFileSync(__dirname + '/textfiles/' + fileName + '.json', body, (err)=>{
+    fs.writeFileSync(__dirname + '/textfiles/' + req.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{
         if (err) throw err;
-        console.log("New file created")
     })
     res.redirect("http://localhost:3000")
 })

@@ -191,10 +191,12 @@ const EntryPage = () => {
 
   const [contentState, setContentState] = useState();
   const [pageTitle, setPageTitle] = useState();
+  const [category, setCategory] = useState();
 
   useEffect(()=>{
     setPageTitle(window.localStorage.getItem("editorFileName"));
     setContentState(window.localStorage.getItem("editorTextBody"));
+    setCategory(window.localStorage.getItem("category"));
     });
 
   const editor = useEditor({
@@ -251,7 +253,8 @@ const EntryPage = () => {
               Changing the file name will create a seperate page with the content below
             </div>
 
-            <input  id="hiddenForm" name="hiddenForm"></input> <br />
+            <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
+            <input id="hiddenDir" name="category" className="hiddenForm" value={category}/>
 
             <button>Click to submit file</button>
 

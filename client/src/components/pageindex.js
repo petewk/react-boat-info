@@ -43,6 +43,7 @@ function PageIndex(){
     const [directories, setDirectories] = useState([]);
     const [files, setFiles] = useState([]);
     const [fileNames, setFileNames] = useState([]);
+    const [thisDir, setThisDir] = useState();
 
     // full directories/files object
     const [fullData, setFullData] = useState({});
@@ -75,15 +76,6 @@ function PageIndex(){
         );
     }, []);
 
-    // function testState(){
-    //     console.log(Object.values(fullData));
-    //     var array = [];
-    //     Object.values(fullData).map((item)=>{
-    //         item.map((value)=>{
-    //             array.push(value);
-    //         })
-    //     });
-    // }
 
 
     function SetPage(e){
@@ -96,8 +88,6 @@ function PageIndex(){
         
 
         //take that file contents and retrieve to HTML
-        console.log(fileData[fileCurr]);
-
 
         setBodyHTML(generateHTML(JSON.parse(fileData[e.target.attributes.filename.value]), [
             Color,
@@ -109,6 +99,8 @@ function PageIndex(){
             Dropcursor,
         ]));
 
+        setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText)
+
         
 
     }
@@ -118,6 +110,7 @@ function PageIndex(){
         
         window.localStorage.setItem("editorTextBody", bodyHTML);
         window.localStorage.setItem("editorFileName", fileTitle);
+        window.localStorage.setItem("category", thisDir);
     })
 
     
@@ -133,7 +126,7 @@ function PageIndex(){
         setSearchValue(searchVal);
         const searchReturns = [];
         fileNames.map((item)=>{
-            if(item.toLowerCase().includes(searchVal.toLowerCase())){
+            if(item.toLowerCase().replaceAll("-", " ").includes(searchVal.toLowerCase())){
                 searchReturns.push(item)
             }
         })
@@ -145,6 +138,7 @@ function PageIndex(){
         clickTarget.classList.toggle('collapsed');
         const arrow = e.target.lastChild;
         arrow.classList.toggle('rotated');
+        arrow.classList.toggle('closed');
     }
 
     
@@ -179,11 +173,11 @@ function PageIndex(){
                                 <>
                                     {directories.map((item, i)=>(
                                         <div key={i}>
-                                            <p onClick={collapseTest}>{item} <i className="fa-solid fa-sort-down"></i></p>
+                                            <p onClick={collapseTest} className='directoryHeader'>{item[0].toUpperCase() + item.substring(1).replaceAll('-', ' ')}<i className="fa-solid fa-sort-down"></i></p>
                                             <div className="testItems collapsible collapsed">
                                                 {fullData[item].map((name, i)=>(
                                                     <div key={i}>
-                                                        <h5 className="indexLink" filename={name} onClick={SetPage}>{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                                        <h5 className="indexLink" filename={name} key={name} onClick={SetPage}>{name.slice(0, -5).replaceAll('-', " ")}</h5>
                                                     </div>
                                                 ))}
                                             </div>

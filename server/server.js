@@ -83,19 +83,17 @@ app.post("/rich", (request, res)=>{
     // // CHECK AUTH CODE USED HERE
 
     const authCode = request.body.authCode;
+    const type = request.body.hiddenFormtype;
     console.log(authCode);
+    console.log(type);
 
     authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
     db.query(authQuery, [authCode], (req, response)=>{
-        console.log(req);
-        console.log(response.length);
         if(response.length===0){
 
-            console.log("Invalid auth")
             res.redirect("http://localhost:3000/failure")
 
         } else {
-            console.log("Valid auth")
             res.redirect("http://localhost:3000/success");
 
             
@@ -103,18 +101,28 @@ app.post("/rich", (request, res)=>{
                 if (err) throw err;
             });
 
+            const date = new Date();
+
+            if(type==="create"){
+                const sqlInsert = "INSERT INTO page_creation (creation_date, page_name, created_by) VALUES (?,?,?)";
+
+                db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
+    
+                    if (err){console.log(err)} 
+                    console.log(result);
+    
+      
+                });
+            } else if(type==="edit"){
+                const sqlInsert = "INSERT INTO page_edits (change_date, category, page_name, changed_by) VALUES (?,?,?,?)";
+
+                db.query(sqlInsert, [date, 'test', fileName, authCode], (err, result)=>{
+                    if (err){console.log(err)};
+                })
+            }
+
             
 
-            const date = new Date();
-            const sqlInsert = "INSERT INTO create_log (creation-date, page_name, created-by) VALUES (?,?,?)"
-
-            db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
-
-                if (err){console.log(err)} 
-                console.log(result);
-
-  
-            });
 
         }
 

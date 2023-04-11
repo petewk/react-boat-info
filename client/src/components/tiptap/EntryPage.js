@@ -269,6 +269,7 @@ const EntryPage = () => {
             </select>
 
             <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
+            <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="create"></input>
 
             <button>SAVE</button>
         </form>

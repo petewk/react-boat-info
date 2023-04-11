@@ -43,7 +43,7 @@ function PageIndex(){
     const [directories, setDirectories] = useState([]);
     const [files, setFiles] = useState([]);
     const [fileNames, setFileNames] = useState([]);
-    const [thisDir, setThisDir] = useState();
+    const [thisDir, setThisDir] = useState('');
 
     // full directories/files object
     const [fullData, setFullData] = useState({});
@@ -109,8 +109,8 @@ function PageIndex(){
     useEffect(()=>{
         
         window.localStorage.setItem("editorTextBody", bodyHTML);
-        window.localStorage.setItem("editorFileName", fileTitle);
-        window.localStorage.setItem("category", thisDir);
+        window.localStorage.setItem("editorFileName", fileTitle.replaceAll(" ", "-"));
+        window.localStorage.setItem("category", thisDir.replaceAll(" ", "-"));
     })
 
     

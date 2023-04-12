@@ -263,13 +263,13 @@ const EntryPage = () => {
               <option disabled selected hidden>Please Choose a Category...</option>
               {
                 categories.map((item, index)=>(
-                  <option value={item}>{item[0].toUpperCase() + item.substring(1).replaceAll("-", " ")}</option>
+                  <option value={item} key={index}>{item[0].toUpperCase() + item.substring(1).replaceAll("-", " ")}</option>
                 ))
               }
             </select>
 
             <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
-            <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="create"></input>
+            <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="create" readOnly></input>
 
             <button>SAVE</button>
         </form>

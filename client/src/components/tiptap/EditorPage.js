@@ -254,7 +254,7 @@ const EntryPage = () => {
             </div>
 
             <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
-            <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="edit" readOnly></input>
+            <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="edit"></input>
             <input id="hiddenDir" name="category" className="hiddenForm" value={category}/>
 
             <button>Click to submit file</button>

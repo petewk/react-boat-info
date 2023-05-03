@@ -1,6 +1,8 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
+const path = require('path');
 const fs = require('fs');
+const port = process.env.PORT || 5000;
 
 
 
@@ -8,6 +10,14 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Didn't need this, actually broke it, but keeping here
+//   // Handle React routing, return all requests to React app
+//   app.get('*', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//   });
 
 
 const mysql = require('mysql2'); 
@@ -132,6 +142,6 @@ app.post("/rich", (request, res)=>{
 
 })
 
-app.listen(5000, ()=>{
-    console.log("running on 5000")
+app.listen(port, ()=>{
+    console.log("running on 5000 great stuff");
 });

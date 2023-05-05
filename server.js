@@ -87,6 +87,8 @@ app.post("/", (req, res)=>{
 
 app.post("/rich", (request, res)=>{
 
+    console.log("Rich post request");
+
     const body = JSON.parse(request.body.hiddenForm);
     const fileName = request.body.fileName.replace(/\s/g, "-");
 

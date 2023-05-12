@@ -103,10 +103,10 @@ app.post("/rich", (request, res)=>{
     db.query(authQuery, [authCode], (req, response)=>{
         if(response.length===0){
 
-            res.redirect("http://localhost:3000/failure")
+            res.redirect("https://test-structure.herokuapp.com/failure")
 
         } else {
-            res.redirect("http://localhost:3000/success");
+            res.redirect("https://test-structure.herokuapp.com/success");
 
             
             fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{

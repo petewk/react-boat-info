@@ -20,13 +20,15 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //   });
 
 
+// mysql://b218872c6def64:6dc23cff@eu-cdbr-west-03.cleardb.net/heroku_88822737ee106d6?reconnect=true
+
 const mysql = require('mysql2'); 
 
 const db = mysql.createPool({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'Holborough4691!',
-    database: 'boat-info'
+    host: 'eu-cdbr-west-03.cleardb.net',
+    user: 'b218872c6def64',
+    password: '6dc23cff',
+    database: 'heroku_88822737ee106d6'
 });
 
 

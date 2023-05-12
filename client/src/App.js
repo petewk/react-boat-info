@@ -43,8 +43,8 @@ function App(){
                 <Routes>                 
                     <Route path="/" element={<PageIndex />}/>
                     <Route path="/edit" element={<Editor />}/>
-                    <Route path="success" element={<Success />}/>
-                    <Route path="failure" element={<Failure />}/>
+                    <Route path="/success" element={<Success />}/>
+                    <Route path="/failure" element={<Failure />}/>
                     <Route path="/submit" element={<EntryPage/>}/>
                     <Route path="/suggest" element={<SuggestPage />}/>
                 </Routes>

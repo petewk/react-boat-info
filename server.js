@@ -102,6 +102,14 @@ app.get('/success', function(req, res) {
     })
   });
 
+  app.get('/submit', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  });
+
 
 app.post("/rich", (request, res)=>{
 

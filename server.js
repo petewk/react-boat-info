@@ -86,6 +86,14 @@ app.post("/", (req, res)=>{
     // res.redirect("http://localhost:3000")
 });
 
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  });
+
 app.get('/success', function(req, res) {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
       if (err) {

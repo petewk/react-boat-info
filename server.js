@@ -171,5 +171,5 @@ app.post("/rich", (request, res)=>{
 })
 
 app.listen(port, ()=>{
-    console.log("running on 5000 great stuff");
+    console.log("running on 5000 great stuff 2");
 });

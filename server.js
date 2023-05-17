@@ -3,12 +3,36 @@ const bodyParser = require ('body-parser');
 const path = require('path');
 const fs = require('fs');
 const port = process.env.PORT || 5000;
+const fileupload = require('express-fileupload');
+const AWS = require('aws-sdk');
+
+
 
 
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+const s3 = new AWS.s3();
+app.use(fileupload());
+
+
+// This is for setting up connection to the S3 client for saving files
+
+const {
+  S3Client,
+  PutObjectCommand
+} = require("@aws-sdk/client-s3");
+
+const s3Config = {
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  region: "eu-west-2",
+};
+
+const s3Client = new S3Client(s3Config);
+
 
 
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -138,6 +162,17 @@ app.post("/rich", (request, res)=>{
             fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{
                 if (err) throw err;
             });
+
+
+            //THIS SECTION FOR SAVING FILES TO S3
+            
+            s3.putObject({
+              Body: JSON.stringify(body),
+              Bucket: 'boat-info-bucket',
+              Key: fileName+'.json'
+            })
+
+            
 
             const date = new Date();
 

@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const s3 = new AWS.s3();
+const s3 = new AWS.S3();
 app.use(fileupload());
 
 
@@ -170,7 +170,7 @@ app.post("/rich", (request, res)=>{
               Body: JSON.stringify(body),
               Bucket: 'boat-info-bucket',
               Key: fileName+'.json'
-            })
+            }).promise();
 
             
 

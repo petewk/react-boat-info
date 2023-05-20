@@ -70,7 +70,7 @@ async function getS3Directories(){
     Delimiter: '/',
   }
 
-  var s3_directories = await s3.listObjectsV2(params, (err.data)=>{
+  var s3_directories = await s3.listObjectsV2(params, (err, data)=>{
     if (err) {
       console.log(err)
     } else {

@@ -60,7 +60,6 @@ const db = mysql.createPool({
 
 app.get("/api", (req, res)=>{
 
-  console.log("hello")
 
   // s3 get files testing
 
@@ -69,13 +68,20 @@ app.get("/api", (req, res)=>{
     MaxKeys: 20,
     Delimiter: '/',
   }
+
+  s3_directories = [];
+
   s3.listObjectsV2(params, (err, data)=>{
     if (err) {
       console.log(err)
     } else {
-        console.log(data.CommonPrefixes)
+      data.CommonPrefixes.map((item)=>{
+        s3_directories.push(item.Prefix);
+      })
     }
   })
+
+  console.log(s3_directories)
 
     // This creates object of directories and files for the index
 
@@ -89,7 +95,7 @@ app.get("/api", (req, res)=>{
         }
     )
 
-    directories.forEach((curr, index)=>{
+    s3_directories.forEach((curr, index)=>{
         directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
         directoriesFiles[curr].forEach((item, index)=>{
             filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')

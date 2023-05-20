@@ -73,9 +73,7 @@ app.get("/api", (req, res)=>{
     if (err) {
       console.log(err)
     } else {
-      data.CommonPrefixes.forEach((item)=>(
-        console.log(item.value)
-      ))
+        console.log(data.CommonPrefixes)
     }
   })
 

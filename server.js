@@ -96,8 +96,10 @@ app.get("/api", (req, res)=>{
         }
     )
 
-    console.log(s3_directories)
-    console.log(directories);
+    // [ { Prefix: 'Piper Info/' }, { Prefix: 'Test-Files/' } ]
+
+    console.log('s3 = ' + s3_directories)
+    console.log('normal = ' + directories);
 
 
 

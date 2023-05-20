@@ -88,6 +88,8 @@ app.get("/api", (req, res)=>{
 
   // s3 get files testing
 
+  let s3_directories = [];
+
   getS3Directories();
   console.log("after directories?");
 

@@ -75,13 +75,14 @@ app.get("/api", (req, res)=>{
     if (err) {
       console.log(err)
     } else {
+      console.log(data.CommonPrefixes);
       data.CommonPrefixes.map((item)=>{
         s3_directories.push(item.Prefix);
       })
+      console.log(s3_directories)
     }
   })
 
-  console.log(s3_directories)
 
     // This creates object of directories and files for the index
 
@@ -95,7 +96,9 @@ app.get("/api", (req, res)=>{
         }
     )
 
-    s3_directories.forEach((curr, index)=>{
+
+
+    directories.forEach((curr, index)=>{
         directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
         directoriesFiles[curr].forEach((item, index)=>{
             filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')

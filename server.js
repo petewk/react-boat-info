@@ -57,6 +57,25 @@ const db = mysql.createPool({
 });
 
 
+params = {
+  Bucket: 'boat-info-bucket',
+  MaxKeys: 20,
+  Delimiter: '/',
+}
+
+function getS3Directories(){
+  
+  s3.listObjectsV2(params, (err, data)=>{
+    if (err) {
+      console.log(err)
+    } else {
+      data.CommonPrefixes.map((item)=>{
+        s3_directories.push(item.Prefix.replace('/', ''));
+      })
+    }
+  })
+}
+
 
 app.get("/api", (req, res)=>{
 
@@ -71,17 +90,20 @@ app.get("/api", (req, res)=>{
 
   s3_directories = [];
 
-  s3.listObjectsV2(params, (err, data)=>{
-    if (err) {
-      console.log(err)
-    } else {
-      data.CommonPrefixes.map((item)=>{
-        s3_directories.push(item.Prefix.replace('/', ''));
-      }).then(()=>{
-        console.log(s3_directories)
-      })
-    }
-  })
+  getS3Directories(params)
+    .then(console.log(s3_directories));
+
+
+
+  // s3.listObjectsV2(params, (err, data)=>{
+  //   if (err) {
+  //     console.log(err)
+  //   } else {
+  //     data.CommonPrefixes.map((item)=>{
+  //       s3_directories.push(item.Prefix.replace('/', ''));
+  //     })
+  //   }
+  // })
 
   
 

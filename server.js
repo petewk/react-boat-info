@@ -63,18 +63,23 @@ params = {
   Delimiter: '/',
 }
 
-function getS3Directories(){
+async function getS3Directories(){
   params = {
     Bucket: 'boat-info-bucket',
     MaxKeys: 20,
     Delimiter: '/',
   }
 
-  s3.listObjectsV2(params).promise()
-    .then(data.CommonPrefixes.map((item)=>{
-      s3_directories.push(item.Prefix.replace('/', ''))
-    .catch(console.log("error"))
-  }))
+  var s3_directories = await s3.listObjectsV2(params, (err.data)=>{
+    if (err) {
+      console.log(err)
+    } else {
+      data.CommonPrefixes.map((item)=>{
+        s3_directories.push(item.Prefix.replace('/', ''));
+      })
+    }
+  })
+  console.log(s3_directories);
 }
 
 
@@ -83,11 +88,8 @@ app.get("/api", (req, res)=>{
 
   // s3 get files testing
 
-
-
-  s3_directories = [];
-
   getS3Directories();
+  console.log("after directories?");
 
   // s3.listObjectsV2(params, (err, data)=>{
   //   if (err) {

@@ -75,9 +75,10 @@ app.get("/api", (req, res)=>{
     if (err) {
       console.log(err)
     } else {
-      console.log(data.CommonPrefixes);
       data.CommonPrefixes.map((item)=>{
         s3_directories.push(item.Prefix.replace('/', ''));
+      }).then(()=>{
+        console.log(s3_directories)
       })
     }
   })

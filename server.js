@@ -47,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // mysql://b218872c6def64:6dc23cff@eu-cdbr-west-03.cleardb.net/heroku_88822737ee106d6?reconnect=true
 
 const mysql = require('mysql2'); 
+const e = require('express');
 
 const db = mysql.createPool({
     host: 'eu-cdbr-west-03.cleardb.net',
@@ -58,6 +59,23 @@ const db = mysql.createPool({
 
 
 app.get("/api", (req, res)=>{
+
+  console.log("hello")
+
+  // s3 get files testing
+
+  params = {
+    Bucket: 'boat-info-bucket',
+    MaxKeys: 20,
+    Delimiter: '/',
+  }
+  s3.listObjectsV2(params, (err, data)=>{
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(data)
+    }
+  })
 
     // This creates object of directories and files for the index
 
@@ -136,6 +154,8 @@ app.get('/success', function(req, res) {
 
 
 app.post("/rich", (request, res)=>{
+
+
 
     console.log("Rich post request");
 

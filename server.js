@@ -83,6 +83,7 @@ app.get("/api", (req, res)=>{
     }
   })
 
+  
 
     // This creates object of directories and files for the index
 
@@ -95,6 +96,8 @@ app.get("/api", (req, res)=>{
             directories.push(curr)
         }
     )
+
+    console.log(directories);
 
 
 

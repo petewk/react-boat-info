@@ -110,29 +110,29 @@ app.post("/", (req, res)=>{
     // res.redirect("http://localhost:3000")
 });
 
-app.get('/success', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
-      if (err) {
-        console.log(err)
-      }
-    })
-  });
+// app.get('/success', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
+//       if (err) {
+//         console.log(err)
+//       }
+//     })
+//   });
 
-  app.get('/failure', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
-      if (err) {
-        console.log(err)
-      }
-    })
-  });
+//   app.get('/failure', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
+//       if (err) {
+//         console.log(err)
+//       }
+//     })
+//   });
 
-  app.get('/submit', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
-      if (err) {
-        console.log(err)
-      }
-    })
-  });
+//   app.get('/submit', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), function(err) {
+//       if (err) {
+//         console.log(err)
+//       }
+//     })
+//   });
 
 
 app.post("/rich", (request, res)=>{
@@ -165,12 +165,14 @@ app.post("/rich", (request, res)=>{
 
 
             //THIS SECTION FOR SAVING FILES TO S3
+
+            console.log('/' + request.body.category + '/' + fileName +'.json');
             
             s3.putObject({
               Body: JSON.stringify(body),
               Bucket: 'boat-info-bucket',
-              Key: fileName+'.json'
-            }).promise();
+              Key: request.body.category + '/' + fileName +'.json'
+            });
 
             
 

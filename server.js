@@ -172,7 +172,7 @@ app.post("/rich", (request, res)=>{
               Body: JSON.stringify(body),
               Bucket: 'boat-info-bucket',
               Key: request.body.category + '/' + fileName +'.json'
-            });
+            }).promise();
 
             
 

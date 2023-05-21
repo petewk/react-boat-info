@@ -72,16 +72,20 @@ async function getS3Directories(){
 
   let s3_directories = [];
 
+  console.log("currently empty array " + s3_directories);
+
   await s3.listObjectsV2(params, (err, data)=>{
     if (err) {
       console.log(err)
     } else {
-      data.CommonPrefixes.map((item)=>{
+      const dataSet = data.CommonPrefixes;
+      dataSet.map((item)=>{
         s3_directories.push(item.Prefix.replace('/', ''));
       })
     }
   })
   console.log(s3_directories);
+  return "from the call back" + s3_directories;
 }
 
 
@@ -99,6 +103,8 @@ app.get("/api", (req, res)=>{
   //     })
   //   }
   // })
+
+  console.log(getS3Directories());
 
   
 

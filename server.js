@@ -70,22 +70,19 @@ async function getS3Directories(){
     Delimiter: '/',
   }
 
-  let s3_directories = [];
-
-  console.log("currently empty array " + s3_directories);
-
-  await s3.listObjectsV2(params, (err, data)=>{
+  const s3_directories = await s3.listObjectsV2(params, (err, data)=>{
     if (err) {
       console.log(err)
     } else {
-      const dataSet = data.CommonPrefixes;
-      dataSet.map((item)=>{
-        s3_directories.push(item.Prefix.replace('/', ''));
+      let dataSet = [];
+      data.CommonPrefixes.map((item)=>{
+        dataSet.push(item.Prefix.replace('/', ''));
       })
-    }
+    };
+    return dataSet;
   })
-  console.log(s3_directories);
-  return "from the call back" + s3_directories;
+
+  return s3_directories;
 }
 
 

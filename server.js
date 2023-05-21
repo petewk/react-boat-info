@@ -71,10 +71,10 @@ async function getS3Directories(){
   }
 
   const s3_directories = await s3.listObjectsV2(params, (err, data)=>{
+    let dataSet = [];
     if (err) {
       console.log(err)
     } else {
-      let dataSet = [];
       data.CommonPrefixes.map((item)=>{
         dataSet.push(item.Prefix.replace('/', ''));
       })

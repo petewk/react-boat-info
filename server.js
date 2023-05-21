@@ -90,11 +90,6 @@ app.get("/api", (req, res)=>{
 
   // s3 get files testing
 
-  let s3_directories = [];
-
-  getS3Directories();
-  console.log("after directories?");
-
   // s3.listObjectsV2(params, (err, data)=>{
   //   if (err) {
   //     console.log(err)
@@ -121,12 +116,8 @@ app.get("/api", (req, res)=>{
 
     // [ { Prefix: 'Piper Info/' }, { Prefix: 'Test-Files/' } ]
 
-    console.log('s3 = ' + s3_directories)
-    console.log('normal = ' + directories);
 
-
-
-    s3_directories.forEach((curr, index)=>{
+    directories.forEach((curr, index)=>{
         directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
         directoriesFiles[curr].forEach((item, index)=>{
             filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')

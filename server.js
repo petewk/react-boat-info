@@ -26,8 +26,10 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Config = {
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  // accessKeyId: process.env.AWS_ACCESS_KEY,
+  // secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  accessKeyId: 'AKIA6KCLYZEP5PEXKVGK',
+  secretAccessKey: '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',
   region: "eu-west-2",
 };
 
@@ -57,53 +59,43 @@ const db = mysql.createPool({
 });
 
 
-params = {
-  Bucket: 'boat-info-bucket',
-  MaxKeys: 20,
-  Delimiter: '/',
-}
-
-async function getS3Directories(){
+async function getInfo(){
   params = {
     Bucket: 'boat-info-bucket',
     MaxKeys: 20,
     Delimiter: '/',
   }
 
-  const s3_directories = await s3.listObjectsV2(params, (err, data)=>{
-    let dataSet = [];
-    if (err) {
-      console.log(err)
-    } else {
-      data.CommonPrefixes.map((item)=>{
-        dataSet.push(item.Prefix.replace('/', ''));
-      })
-    };
-    return dataSet;
-  })
+  try {
+    const info = await s3.listObjectsV2(params, (err, data)=>{
+      if(err){
+        console.log(err)
+      } else {
+        return data
+      }
+    }).promise();
+    console.log(info);
+  } catch (err) {
+    console.log(err);
+  }
 
-  return s3_directories;
+
+  // var info = await s3.listObjectsV2(params, (err, data)=>{
+  //   if (err){
+  //     console.log(err)
+  //   } else {
+  //     return data.CommonPrefixes;
+  //   }
+  // });
 }
 
 
 app.get("/api", (req, res)=>{
 
+  console.log(getInfo());
 
-  // s3 get files testing
 
-  // s3.listObjectsV2(params, (err, data)=>{
-  //   if (err) {
-  //     console.log(err)
-  //   } else {
-  //     data.CommonPrefixes.map((item)=>{
-  //       s3_directories.push(item.Prefix.replace('/', ''));
-  //     })
-  //   }
-  // })
 
-  console.log(getS3Directories());
-
-  
 
     // This creates object of directories and files for the index
 

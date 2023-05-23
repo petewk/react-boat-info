@@ -57,43 +57,23 @@ const db = mysql.createPool({
 });
 
 
-async function getInfo(){
-  params = {
+app.get("/api", async (req, res)=>{
+
+    const params = {
     Bucket: 'boat-info-bucket',
     MaxKeys: 20,
-    Delimiter: '/',
+    Delimiter: '/'
   }
 
   try {
-    const info = await s3.listObjectsV2(params, (err, data)=>{
-      if(err){
-        console.log(err)
-      } else {
-        return data
-      }
-    }).promise();
-    console.log(info);
-  } catch (err) {
-    console.log(err);
-  }
-
-
-  // var info = await s3.listObjectsV2(params, (err, data)=>{
-  //   if (err){
-  //     console.log(err)
-  //   } else {
-  //     return data.CommonPrefixes;
-  //   }
-  // });
-}
-
-
-app.get("/api", (req, res)=>{
-
-  console.log(getInfo());
-
-
-
+    var info = await s3.listObjectsV2(params).promise();
+  } catch (e) {
+    console.log(e)
+  };
+  
+  s3Directories = info.CommonPrefixes.map((item)=>{
+    return item.Prefix.replace('/', '')
+  });
 
     // This creates object of directories and files for the index
 
@@ -101,16 +81,13 @@ app.get("/api", (req, res)=>{
     var directories = [];
     var directoriesFiles = {};
 
-    fs.readdirSync(__dirname + '/textfiles').forEach(
-        (curr, index)=>{
-            directories.push(curr)
-        }
-    )
+    // fs.readdirSync(__dirname + '/textfiles').forEach(
+    //     (curr, index)=>{
+    //         directories.push(curr)
+    //     }
+    // )
 
-    // [ { Prefix: 'Piper Info/' }, { Prefix: 'Test-Files/' } ]
-
-
-    directories.forEach((curr, index)=>{
+    s3Directories.forEach((curr, index)=>{
         directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
         directoriesFiles[curr].forEach((item, index)=>{
             filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')

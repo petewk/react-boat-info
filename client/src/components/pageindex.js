@@ -77,9 +77,27 @@ function PageIndex(){
     }, []);
 
 
+    function testFunc(){
+        console.log("hello")
+    }
+
 
     function SetPage(e){
 
+
+        console.log("hi");
+
+
+        // useEffect(()=>{
+        //     fetch("/getText")
+        //     .then(
+        //         response => response.json()
+        //     ).then(
+        //         data =>{
+        //             console.log(data)
+        //         }
+        //     )
+        // })
         
         //get current file name and set current file
         setFileCurr(e.target.attributes.filename.value);
@@ -176,8 +194,8 @@ function PageIndex(){
                                             <p onClick={collapseTest} className='directoryHeader'>{item[0].toUpperCase() + item.substring(1).replaceAll('-', ' ')}<i className="fa-solid fa-sort-down"></i></p>
                                             <div className="testItems collapsible collapsed">
                                                 {fullData[item].map((name, i)=>(
-                                                    <div key={i}>
-                                                        <h5 className="indexLink" filename={name} key={name} onClick={SetPage}>{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                                    <div key={i} onClick={SetPage}>
+                                                        <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
                                                     </div>
                                                 ))}
                                             </div>
@@ -218,7 +236,7 @@ function PageIndex(){
             <div id="textPage">
                 {fileCurr === '' ? (
                     <>
-                    <h2>Welcome to the boat info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                    <h2>Welcome to the boat test info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
                     </>
                 ) : (
                     

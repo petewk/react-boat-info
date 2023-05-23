@@ -87,7 +87,7 @@ app.get("/api", async (req, res)=>{
         }
     )
 
-    s3Directories.forEach((curr, index)=>{
+    directories.forEach((curr, index)=>{
         directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
         directoriesFiles[curr].forEach((item, index)=>{
             filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')

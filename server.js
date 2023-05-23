@@ -83,25 +83,25 @@ app.get("/api", async (req, res)=>{
 
     console.log(fs.readdirSync(__dirname));
 
-    // fs.readdirSync(__dirname + '/textfiles').forEach(
-    //     (curr, index)=>{
-    //         directories.push(curr)
-    //     }
-    // )
+    fs.readdirSync(__dirname + '/textfiles').forEach(
+        (curr, index)=>{
+            directories.push(curr)
+        }
+    )
 
-    // directories.forEach((curr, index)=>{
-    //     directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
-    //     directoriesFiles[curr].forEach((item, index)=>{
-    //         filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')
-    //     });
+    directories.forEach((curr, index)=>{
+        directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
+        directoriesFiles[curr].forEach((item, index)=>{
+            filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')
+        });
 
-    //     console.log(directoriesFiles);
+        console.log(directoriesFiles);
 
         
 
-    // });
+    });
 
-    // res.json({directoryInfo: directoriesFiles, fileBodies: filesFull});
+    res.json({directoryInfo: directoriesFiles, fileBodies: filesFull});
 
     });
 

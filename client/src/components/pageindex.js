@@ -56,6 +56,7 @@ function PageIndex(){
             response => response.json()
         ).then(
             data => {
+                console.log(data.directoryInfo);
                 setFullData(data.directoryInfo);
                 setDirectories(Object.keys(data.directoryInfo).sort());
                 setFileData(data.fileBodies)
@@ -77,46 +78,46 @@ function PageIndex(){
     }, []);
 
 
-    function testFunc(){
-        console.log("hello")
-    }
-
-
     function SetPage(e){
 
 
-        console.log("hi");
 
-
-        // useEffect(()=>{
-        //     fetch("/getText")
-        //     .then(
-        //         response => response.json()
-        //     ).then(
-        //         data =>{
-        //             console.log(data)
-        //         }
-        //     )
-        // })
         
         //get current file name and set current file
         setFileCurr(e.target.attributes.filename.value);
         var fileNametemp = e.target.innerHTML;
         setFileTitle(fileNametemp);
+
+        var data = {
+            "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
+            "fileName": e.target.attributes.filename.value
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+
+
+        fetch('/getText', requestOptions).then(
+            response=>response.json()
+        ).then(
+            data=>{
+                console.log(data)
+                setBodyHTML(generateHTML(data, [
+                    Color,
+                    TextStyle,
+                    Underline,
+                    StarterKit,
+                    Link1,
+                    Image,
+                    Dropcursor,
+                ]));
+            }
+        );
         
-
-        //take that file contents and retrieve to HTML
-
-        setBodyHTML(generateHTML(JSON.parse(fileData[e.target.attributes.filename.value]), [
-            Color,
-            TextStyle,
-            Underline,
-            StarterKit,
-            Link1,
-            Image,
-            Dropcursor,
-        ]));
-
         setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText)
 
         

@@ -26,8 +26,11 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Config = {
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  // accessKeyId: process.env.AWS_ACCESS_KEY,
+  // secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  accessKeyId: 'AKIA6KCLYZEP5PEXKVGK',
+  secretAccessKey: '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',
+  region: "eu-west-2",
 
 };
 
@@ -59,51 +62,108 @@ const db = mysql.createPool({
 
 app.get("/api", async (req, res)=>{
 
-    const params = {
+  // GETS THE DIRECTORIES FROM S3
+
+  const dirParams = {
     Bucket: 'boat-info-bucket',
-    MaxKeys: 20,
     Delimiter: '/'
   }
 
   try {
-    var info = await s3.listObjectsV2(params).promise();
+    var directories = await s3.listObjectsV2(dirParams).promise();
   } catch (e) {
     console.log(e)
   };
   
-  s3Directories = info.CommonPrefixes.map((item)=>{
+  s3Directories = directories.CommonPrefixes.map((item)=>{
     return item.Prefix.replace('/', '')
   });
 
+  
+  // GETS THE FILES FROM S3 AND ORGANISE WITH DIRECTORIES
+
+  var fulls3Array = {};
+
+
+  s3Directories.forEach((directory)=>{
+    fulls3Array[directory] = new Array();
+  });
+
+
+  const fileParams = {
+    Bucket: 'boat-info-bucket',
+    Delimiter: '.json',
+  };
+
+
+  try {
+    rawArray = await s3.listObjectsV2(fileParams).promise()
+  } catch(e) {
+    console.log(e)
+  };
+
+  var newArray = [];
+
+  rawArray.CommonPrefixes.forEach((item)=>{
+    newArray.push(item.Prefix)
+  });
+
+  console.log(newArray);
+  
+  s3Directories.map((directory)=>{
+    newArray.map((item)=>{
+      if(item.includes(directory)){
+        fulls3Array[directory].push(item.replace(directory + '/', ''))
+      }
+    })
+  });
+
+  console.log(fulls3Array);
+
+
+   
     // This creates object of directories and files for the index
 
     var filesFull = {};
-    var directories = [];
-    var directoriesFiles = {};
 
-    // fs.readdirSync(__dirname + '/textfiles').forEach(
-    //     (curr, index)=>{
-    //         directories.push(curr)
-    //     }
-    // )
 
-    s3Directories.forEach((curr, index)=>{
-        directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
-        directoriesFiles[curr].forEach((item, index)=>{
-            filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')
-        });
+    // s3Directories.forEach((curr, index)=>{
+    //     directoriesFiles[curr] = fs.readdirSync(__dirname + '/textfiles/' + curr);
+    //     directoriesFiles[curr].forEach((item, index)=>{
+    //         filesFull[item] = fs.readFileSync(__dirname + '/textfiles/' + curr + '/' + item, 'utf-8')
+    //     });
 
-        
+    // });
+
+    res.json({directoryInfo: fulls3Array, fileBodies: filesFull});
 
     });
 
-    res.json({directoryInfo: directoriesFiles, fileBodies: filesFull});
 
-    });
 
-app.get("/getText", async(req, res)=>{
-  res.send("hello")
-})
+app.post("/getText", async (req, res)=>{
+
+  console.log(req.body.fileName);
+
+  params = {
+    Key: req.body.folder + '/' + req.body.fileName,
+    Bucket: 'boat-info-bucket'
+  }
+
+  // console.log(params.Key);
+
+  try {
+    var file = await s3.getObject(params).promise();
+  } catch (e) {
+    console.log(e)
+  };
+
+  let parseFile = JSON.parse(file.Body);
+  res.send(parseFile);
+  
+});
+
+
 
 
 

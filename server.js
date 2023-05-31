@@ -26,10 +26,9 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Config = {
-  // accessKeyId: process.env.AWS_ACCESS_KEY,
-  // secretAccessKey: process.env.AWS_ACCESS_SECRET,
-  accessKeyId: 'AKIA6KCLYZEP5PEXKVGK',
-  secretAccessKey: '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',
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+
   region: "eu-west-2",
 
 };

@@ -351,6 +351,7 @@ input::-webkit-inner-spin-button {
     width: 100vw;
     text-align: center;
     padding: 5vh 0;
+    height: 100vh;
 }
 
 .suggestPage input {
@@ -376,5 +377,21 @@ input::-webkit-inner-spin-button {
     height: 40px;
     background-color: #bcb9ff;
     border: 1px solid var(--piperDarkBlue)
+}
+
+#alertWindow {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: #0b3c625c;
+    z-index: -50;
+    transition: 0.3s;
+}
+
+.fadeIn {
+    z-index: 100 !important;
+    transition: 0.3s;
 }
 

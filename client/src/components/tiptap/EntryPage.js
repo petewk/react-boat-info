@@ -257,7 +257,7 @@ const EntryPage = () => {
             <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
             <h5>This will be needed to save the page</h5>
 
-            <input className="createFormInput" id="fileNameInput" placeholder='Set File Name Here' name="fileName"></input> <br />
+            <input className="createFormInput" id="fileNameInput" placeholder='Page Title' name="fileName"></input> <br />
 
             <select name="category" id="categorySelect" required>
               <option disabled selected hidden>Please Choose a Category...</option>

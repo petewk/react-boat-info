@@ -19,12 +19,16 @@ function App(){
         setNeedReturn(!needReturn);
     }
 
+    function removeReturn(){
+        setNeedReturn(false);
+    }
+
     return (
         <BrowserRouter>
             <div>
                 <header>
                     <nav id="navBar">
-                        <Link to='/'><h1 id="logo">Piper Info</h1></Link>
+                        <Link to='/' onClick={removeReturn}><h1 id="logo">Piper Info</h1></Link>
                         
                         <div id="links">
                         {needReturn ? (

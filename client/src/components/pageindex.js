@@ -176,7 +176,6 @@ function PageIndex(){
                 <div>
                     <input id="searchBox" placeholder="Search..." onChange={searchFilter}></input>
                 </div>
-
                         {(directories.length === 0) ? (
                             // Render when no files to show
 
@@ -190,6 +189,7 @@ function PageIndex(){
                                 {/* Render when files but no search */}
 
                                 <>
+                                
                                     {directories.map((item, i)=>(
                                         <div key={i}>
                                             <p onClick={collapseTest} className='directoryHeader'>{item[0].toUpperCase() + item.substring(1).replaceAll('-', ' ')}<i className="fa-solid fa-sort-down"></i></p>
@@ -238,6 +238,13 @@ function PageIndex(){
                 {fileCurr === '' ? (
                     <>
                     <h2>Welcome to the boat test info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                    <div>
+                        <ul id="guidePoints">
+                            <li>Use the index on the left hand side to search for info you're looking for;</li>
+                            <li>If you wish to submit new pages or edit info on an existing page, you will need an authorisation code;</li>
+                            <li>If you have a suggestion for information you'd like so see a page on which you can't find, or would like to request permission to create/edit new pages, please fill out the Suggestion form through the link in the top right of your screen</li>
+                        </ul>
+                    </div>
                     </>
                 ) : (
                     

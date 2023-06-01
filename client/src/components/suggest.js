@@ -34,7 +34,9 @@ function SuggestPage(){
             </div>
             <div id="alertWindow">
                 <div id="alertBox">
-                    <h3>Thanks for the suggestion!</h3>
+                    <h3 id='thanks'>Thanks for the suggestion!</h3>
+                    <h4 className='return'> <a href='https://test-structure.herokuapp.com/'>CLICK HERE</a></h4>
+                    <h4 className='return'>To return to the home page</h4>
                 </div>
             </div>
         </>

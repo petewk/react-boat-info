@@ -56,15 +56,16 @@ header {
 }
 
 #pageIndex {
-    width: 200px;
-    min-width:fit-content;
+    width: 18vw;
+    max-width: 300px;
+    min-width: 150px;
     background-color: lightgray;
-    max-width: 17vw;
     float: left;
     height: 100%;
     overflow-y: scroll;
-    overflow-x: hidden;
     padding-top: 30px;
+    padding-left: 15px;
+    overflow-wrap: break-word;
 }
 
 .directoryHeader {
@@ -156,8 +157,16 @@ header {
 #textPage {
     display: inline-block;
     width: 78.5vw;
-    float: left;
-    margin-left: 30px;
+    float: right;
+    max-width: calc(100vw - 195px);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#guidePoints {
+    padding: 0px 20px;
+    line-height: 1.5;
+    margin-top: 50px;
 }
 
 #textPage a {
@@ -385,13 +394,29 @@ input::-webkit-inner-spin-button {
     width: 100%;
     top: 0px;
     left: 0px;
-    background-color: #0b3c625c;
+    background-color: #051e32ab;
     z-index: -50;
+    display: none;
     transition: 0.3s;
 }
 
 .fadeIn {
     z-index: 100 !important;
     transition: 0.3s;
+    display: block !important;
+}
+
+#alertBox {
+    width: 40vw;
+    background-color: white;
+    border: 2px solid var(--piperMidBrown);
+    text-align: center;
+    margin: 0 auto;
+    height: 40vh;
+    border-radius: 12px;
+    top: 20vh;
+    position: fixed;
+    left: 30vw;
+    box-shadow: 11px 11px 45px 0px;
 }
 

@@ -156,7 +156,7 @@ function PageIndex(){
         const clickTarget = e.target.nextElementSibling;
         clickTarget.classList.toggle('collapsed');
         const arrow = e.target.lastChild;
-        arrow.classList.toggle('rotated');
+        arrow.classList.toggle('fa-rotate-180');
         arrow.classList.toggle('closed');
     }
 

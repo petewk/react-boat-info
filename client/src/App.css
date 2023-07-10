@@ -9,6 +9,7 @@ body {
 
 header {
     height: 9vh;
+    min-height: 80px;
 }
 
 #container {
@@ -19,6 +20,7 @@ header {
     background-color:var(--piperDarkBlue);
     height: inherit;
     color: var(--piperMidBrown);
+    min-height: 80px;
 }
 
 .navLink {
@@ -70,6 +72,14 @@ header {
 
 .directoryHeader {
     padding: 0px 10px;
+}
+
+.fa-solid {
+    transition: .3s
+}
+
+.fa-rotate-180 {
+    transition: .3s;
 }
 
 .fileName {
@@ -344,7 +354,10 @@ input::-webkit-inner-spin-button {
 
 #searchBox {
     margin: 5px;
-    width: 90%;
+    width: 85%;
+    height: 25px;
+    border-radius: 5px;
+    border: none;
 }
 
 .resultPage {
@@ -420,3 +433,19 @@ input::-webkit-inner-spin-button {
     box-shadow: 11px 11px 45px 0px;
 }
 
+@media only screen and (max-width: 450px) {
+    .navLink {
+        display: block;
+        margin: 8px 20px;
+    }
+
+    #links {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-height: 850px) {
+    #mainSubmit button {
+        position:initial
+    }
+}

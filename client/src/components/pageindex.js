@@ -143,7 +143,13 @@ function PageIndex(){
     function searchFilter(e){
         const searchVal = e.target.value;
         setSearchValue(searchVal);
-        const searchReturns = [];
+        let searchReturns = [];
+        let fileNames = [];
+        directories.map((item)=>{
+            fullData[item].map((item)=>{
+                fileNames.push(item)
+            })
+        });
         fileNames.map((item)=>{
             if(item.toLowerCase().replaceAll("-", " ").includes(searchVal.toLowerCase())){
                 searchReturns.push(item)

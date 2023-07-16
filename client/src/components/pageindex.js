@@ -99,12 +99,14 @@ function PageIndex(){
                 "folder": getKeyByValue(fullData, fileAtt),
                 "fileName": fileAtt
             }
+            console.log(getKeyByValue(fullData, fileAtt))
             setThisDir(getKeyByValue(fullData, fileAtt));
         } else {
             var data = {
                 "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
                 "fileName": e.target.attributes.filename.value
             };
+            console.log(e.target.parentElement.parentElement.previousElementSibling.innerText)
             setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText);
         }
 

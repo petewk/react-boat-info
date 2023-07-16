@@ -94,7 +94,7 @@ function PageIndex(){
         setFileTitle(fileNametemp);
 
         
-        if (e.target.classList.includes('searched')){
+        if (e.target.classList.contains('searched')){
             var data = {
                 "folder": getKeyByValue(fullData, fileAtt),
                 "fileName": fileAtt

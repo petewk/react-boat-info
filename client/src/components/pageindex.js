@@ -226,8 +226,8 @@ function PageIndex(){
 
                                 (
                                     searchResult.map((item, i)=>(
-                                        <div>
-                                            <h5 className="indexLink" filename={item} onClick={SetPage}>{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                        <div key={i} onClick={SetPage}>
+                                            <h5 className="indexLink" filename={item} >{item.slice(0, -5).replaceAll('-', " ")}</h5>
                                         </div>
                                     ))
                                 )

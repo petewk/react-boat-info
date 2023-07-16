@@ -225,9 +225,9 @@ function PageIndex(){
                                 // When search and results to show
 
                                 (
-                                    searchResult.map((item, i)=>(
+                                    searchResult..map((name, i)=>(
                                         <div key={i} onClick={SetPage}>
-                                            <h5 className="indexLink" filename={item} >{item.slice(0, -5).replaceAll('-', " ")}</h5>
+                                            <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
                                         </div>
                                     ))
                                 )

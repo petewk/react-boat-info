@@ -98,9 +98,8 @@ function PageIndex(){
             var data = {
                 "folder": getKeyByValue(fullData, fileAtt),
                 "fileName": fileAtt
-            };
-            setThisDir(getKeyByValue(fullData, fileAtt))
-            
+            }
+            setThisDir(getKeyByValue(fullData, fileAtt));
         } else {
             var data = {
                 "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
@@ -137,8 +136,9 @@ function PageIndex(){
             }
         );
         
-
         
+        
+
         
 
     }

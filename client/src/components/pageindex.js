@@ -93,18 +93,14 @@ function PageIndex(){
         var fileNametemp = e.target.innerHTML;
         setFileTitle(fileNametemp);
 
-        if(e.target.classList.includes('searched')){
-            var data = {
-                "folder": getKeyByValue(fullData, e.target.attributes.filename.value),
-                "fileName": e.target.attributes.filename.value
-            }
-        } else {
-            var data = {
-                "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
-                "fileName": e.target.attributes.filename.value
-            }
-        }
+        console.log(e.target);
 
+
+
+        var data = {
+            "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
+            "fileName": e.target.attributes.filename.value
+        }
 
 
         const requestOptions = {

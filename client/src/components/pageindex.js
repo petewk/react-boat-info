@@ -98,12 +98,15 @@ function PageIndex(){
             var data = {
                 "folder": getKeyByValue(fullData, fileAtt),
                 "fileName": fileAtt
-            }
+            };
+            setThisDir(getKeyByValue(fullData, fileAtt))
+            
         } else {
             var data = {
                 "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
                 "fileName": e.target.attributes.filename.value
-            }
+            };
+            setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText);
         }
 
 
@@ -134,8 +137,8 @@ function PageIndex(){
             }
         );
         
-        setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText)
 
+        
         
 
     }

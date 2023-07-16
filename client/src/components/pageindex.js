@@ -86,21 +86,27 @@ function PageIndex(){
     function SetPage(e){
 
 
-
+        let fileAtt = e.target.attributes.filename.value;
         
         //get current file name and set current file
-        setFileCurr(e.target.attributes.filename.value);
+        setFileCurr(fileAtt);
         var fileNametemp = e.target.innerHTML;
         setFileTitle(fileNametemp);
 
-        console.log(e.target);
-
-
-
-        var data = {
-            "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
-            "fileName": e.target.attributes.filename.value
+        
+        if e.target.classList.includes('searched'){
+            var data = {
+                "folder": getKeyByValue(fullData, fileAtt),
+                "fileName": fileAtt
+            }
+        } else {
+            var data = {
+                "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
+                "fileName": e.target.attributes.filename.value
+            }
         }
+
+
 
 
         const requestOptions = {
@@ -236,8 +242,8 @@ function PageIndex(){
 
                                 (
                                     searchResult.map((name, i)=>(
-                                        <div key={i} onClick={SetPage} className="searched">
-                                            <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                        <div key={i} onClick={SetPage} >
+                                            <h5 className="indexLink searched" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
                                         </div>
                                     ))
                                 )

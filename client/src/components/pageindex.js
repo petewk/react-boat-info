@@ -78,9 +78,13 @@ function PageIndex(){
     }, []);
 
 
-    function getKeyByValue(object, value) {
-        return Object.keys(object).find(key => object[key] === value);
-      };
+    function findDir(fileName){
+        directories.map((directory)=>{
+            if(directory.values.includes(fileName)){
+                return(directory)
+            }
+        })
+    };
 
 
     function SetPage(e){
@@ -100,7 +104,7 @@ function PageIndex(){
                 "fileName": fileAtt
             }
             console.log(getKeyByValue(fullData, fileAtt))
-            setThisDir(getKeyByValue(fullData, fileAtt));
+            setThisDir(findDir(fileAtt));
         } else {
             var data = {
                 "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,

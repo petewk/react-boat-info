@@ -100,10 +100,9 @@ function PageIndex(){
         
         if (e.target.classList.contains('searched')){
             var data = {
-                "folder": getKeyByValue(fullData, fileAtt),
+                "folder": findDir(fileAtt),
                 "fileName": fileAtt
             }
-            console.log(getKeyByValue(fullData, fileAtt))
             setThisDir(findDir(fileAtt));
         } else {
             var data = {

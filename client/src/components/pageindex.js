@@ -80,7 +80,7 @@ function PageIndex(){
 
     function findDir(fileName){
         directories.map((directory)=>{
-            if(directory.values.includes(fileName)){
+            if(directory.values.contains(fileName)){
                 return(directory)
             }
         })

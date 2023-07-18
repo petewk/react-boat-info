@@ -232,10 +232,10 @@ app.post("/rich", (request, res)=>{
     db.query(authQuery, [authCode], (req, response)=>{
         if(response.length===0){
 
-            res.redirect("https://test-structure.herokuapp.com/failure")
+            res.redirect("https://boat-wiki.herokuapp.com/failure")
 
         } else {
-            res.redirect("https://test-structure.herokuapp.com/success");
+            res.redirect("https://boat-wiki.herokuapp.com/success");
 
             
             fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{

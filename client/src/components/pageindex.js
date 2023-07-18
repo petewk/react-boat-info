@@ -104,7 +104,7 @@ function PageIndex(){
                 "folder": findDir(fileAtt),
                 "fileName": fileAtt
             };
-            console.log(fileAtt);
+            console.log(typeof(fileAtt));
             console.log(fullData);
             console.log(findDir(fileAtt));
             setThisDir(findDir(fileAtt));

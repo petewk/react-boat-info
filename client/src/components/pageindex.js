@@ -109,7 +109,7 @@ function PageIndex(){
         } else {
             var data = {
                 "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
-                "fileName": e.target.attributes.filename.value
+                "fileName": findDir(fileAtt)
             };
             console.log(e.target.parentElement.parentElement.previousElementSibling.innerText)
             setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText);

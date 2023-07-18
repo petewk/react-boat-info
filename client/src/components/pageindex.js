@@ -90,7 +90,7 @@ function PageIndex(){
 
     function SetPage(e){
 
-
+        console.log(e.target);
         let fileAtt = e.target.attributes.filename.value;
         
         //get current file name and set current file
@@ -103,7 +103,9 @@ function PageIndex(){
             var data = {
                 "folder": findDir(fileAtt),
                 "fileName": fileAtt
-            }
+            };
+            console.log(fileAtt);
+            console.log(fullData);
             console.log(findDir(fileAtt));
             setThisDir(findDir(fileAtt));
         } else {

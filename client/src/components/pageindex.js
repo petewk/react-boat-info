@@ -79,9 +79,10 @@ function PageIndex(){
 
 
     function findDir(fileName){
-        directories.map((directory)=>{
-            if(directory.values.contains(fileName)){
-                return(directory)
+        let keys = Object.keys(fullData);
+        keys.map((key)=>{
+            if(fullData[key].includes(fileName)){
+                return key
             }
         })
     };

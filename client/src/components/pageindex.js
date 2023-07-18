@@ -104,6 +104,7 @@ function PageIndex(){
                 "folder": findDir(fileAtt),
                 "fileName": fileAtt
             }
+            console.log(findDi(fileAtt));
             setThisDir(findDir(fileAtt));
         } else {
             var data = {

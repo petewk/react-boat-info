@@ -100,27 +100,13 @@ function PageIndex(){
         var fileNametemp = e.target.innerHTML;
         setFileTitle(fileNametemp);
 
-        
-        if (e.target.classList.contains('searched')){
-            var data = {
-                "folder": findDir(fileAtt),
-                "fileName": fileAtt
-            };
-            console.log(typeof(fileAtt));
-            console.log(fullData);
-            console.log(findDir(fileAtt));
-            setThisDir(findDir(fileAtt));
-        } else {
-            var data = {
-                "folder": e.target.parentElement.parentElement.previousElementSibling.innerText,
-                "fileName": findDir(fileAtt)
-            };
-            console.log(e.target.parentElement.parentElement.previousElementSibling.innerText)
-            setThisDir(e.target.parentElement.parentElement.previousElementSibling.innerText);
-        }
-
-
-
+    
+        var data = {
+            "folder": findDir(fileAtt),
+            "fileName": fileAtt
+        };
+        setThisDir(findDir(fileAtt));
+       
 
         const requestOptions = {
             method: 'POST',

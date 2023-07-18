@@ -91,7 +91,7 @@ function PageIndex(){
     function SetPage(e){
 
         console.log(e.target);
-        let fileAtt = e.target.attributes.filename.value;
+        var fileAtt = e.target.attributes.filename.value;
         
         //get current file name and set current file
         setFileCurr(fileAtt);

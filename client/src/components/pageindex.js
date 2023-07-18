@@ -79,12 +79,14 @@ function PageIndex(){
 
 
     function findDir(fileName){
+        var result;
         let keys = Object.keys(fullData);
         keys.map((key)=>{
             if(fullData[key].includes(fileName)){
-                return key
+                result = key
             }
         })
+        return result;
     };
 
 

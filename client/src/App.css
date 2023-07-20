@@ -433,6 +433,27 @@ input::-webkit-inner-spin-button {
     box-shadow: 11px 11px 45px 0px;
 }
 
+#thanks {
+    color: var(--piperDarkBlue);
+    padding: 40px 0px;
+    text-decoration: underline;
+    font-size: 1.7em;
+}
+
+.return {
+    color: var(--piperDarkBlue)
+}
+
+.return a {
+    color: var(--piperMidBrown);
+    transition: .3s;
+}
+
+.return a:hover {
+    color: var(--piperDarkBlue);
+    transition: .3s
+}
+
 @media only screen and (max-width: 450px) {
     .navLink {
         display: block;

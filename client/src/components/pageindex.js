@@ -259,7 +259,7 @@ function PageIndex(){
             <div id="textPage">
                 {fileCurr === '' ? (
                     <>
-                    <h2>Welcome to the boat test info page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                    <h2>Welcome to the boat info wiki page, select a file from the left to view info, or use the button at the top to create a new file</h2>
                     <div>
                         <ul id="guidePoints">
                             <li>Use the index on the left hand side to search for info you're looking for;</li>

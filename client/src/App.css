@@ -56,11 +56,6 @@ header {
     align-items: center;
 }
 
-.indexLink {
-    margin: 30px 20px;
-    text-decoration: underline;
-
-}
 
 .navLink {
     text-align: center;
@@ -80,6 +75,8 @@ header {
     overflow-wrap: break-word;
     padding: 3px;
     cursor: pointer;
+    color: var(--piperDarkBlue);
+    text-decoration: underline;
 }
 
 #pageIndex {
@@ -144,6 +141,8 @@ header {
     overflow-y: scroll; 
     transition: .3s;
     background-color: #c5c5df;
+    border-left: 2px solid var(--piperDarkBlue);
+    box-shadow: inset 9px 9px 9px -7px rgba(0,0,0,0.4);
 }
 
 .collapsed {

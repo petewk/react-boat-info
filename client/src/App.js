@@ -23,6 +23,10 @@ function App(){
         setNeedReturn(false);
     }
 
+    function setReturn(){
+        setNeedReturn(!needReturn);
+    }
+
     return (
         <BrowserRouter>
             <div>
@@ -32,11 +36,11 @@ function App(){
                         
                         <div id="links">
                         {needReturn ? (
-                            <Link onClick={showForm} to="/" className="navLink"> Return</Link>
+                            <Link onClick={showForm} to="/" className="navLink" id="return"> <i class="fa-solid fa-rotate-left"></i></Link>
                         ):(
                             <>
-                            <Link className="navLink" to="submit" onClick={showForm}>Submit form</Link>
-                            <Link className="navLink" to="/suggest">Suggest</Link>
+                            <div><Link className="navLink" to="submit" onClick={showForm}><i class="fa-solid fa-pen-to-square"></i> <br /> <b>Submit</b></Link></div>
+                            <div><Link className="navLink" to="/suggest" onClick={setReturn}><i class="fa-regular fa-envelope"></i> <br /> <b>Suggest</b></Link></div>
                             </>
                         )}
                         </div>

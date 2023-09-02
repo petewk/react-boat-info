@@ -21,6 +21,8 @@ header {
     height: inherit;
     color: var(--piperMidBrown);
     min-height: 80px;
+    width: 100%;
+    position: fixed;
 }
 
 .navLink {
@@ -37,15 +39,38 @@ header {
 }
 
 #links {
-    display: inline-block;
+    display: inline-flex;
     float: right;
-    margin-top: 30px;
+    height: inherit;
+    justify-content: center;
+    margin-right: 15px;
 }
 
-.navLink, .indexLink {
+#links > div {
+    display: flex;
+    align-items: center;
+}
+
+#return {
+    display: flex;
+    align-items: center;
+}
+
+.indexLink {
     margin: 30px 20px;
     text-decoration: underline;
 
+}
+
+.navLink {
+    text-align: center;
+    margin: 10px 10px;
+    text-decoration: none;
+}
+
+.navLink i {
+    font-size: 1.4em;
+    margin: 5px 10px;
 }
 
 .indexLink {
@@ -68,6 +93,7 @@ header {
     padding-top: 30px;
     padding-left: 15px;
     overflow-wrap: break-word;
+    position: fixed;
 }
 
 .directoryHeader {
@@ -206,12 +232,19 @@ header {
 /* Input submit page styling */
 
 #mainSubmit {
-    text-align: center;
     margin-top: 2vh;
+    width: 38vw;
+    margin-left: 10vw;
+    display: inline-block;
 }
 
 #mainSubmit > h5 {
     margin: 10px;
+}
+
+#authCodeInput {
+    margin: 5px 20px 10px 0px;
+    text-align: center;
 }
 
 #nameInput {
@@ -223,15 +256,19 @@ header {
     margin: 20px auto 0 auto;
 }
 
-.createFormInput {
-    text-align: center;
-}
 
 #fileNameInput, #fileNameInputEdit {
-    width: 40vw;
+    width: 38vw;
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.6;
+}
+
+#fileNameInput:focus-visible {
+    outline: 1px solid var(--piperDarkBlue);
+    transition-property: background-color;
+    transition-duration: .6s;
+    background-color: #a4d2ff63;
 }
 
 input::-webkit-outer-spin-button,
@@ -287,15 +324,22 @@ input::-webkit-inner-spin-button {
 }
 
 #editorToolbar {
-    text-align: center !important;
+    margin: 10px auto !important;
+    margin-right: 10vw !important;
+    text-align: right !important;
+    width: 38vw !important;
+    display: inline-block;
+    float: right;
 }
 
 #editorToolbar > button {
     min-width: 35px;
+    max-width: 35px;
     height: 35px;
-    border-width: 0px 1px;
+    border-width: 0px 1px 0px 0px;
     box-sizing: content-box;
     transition: .3s;
+    margin-bottom: 5px;
 }
 
 #editorToolbar > button:hover {
@@ -309,6 +353,13 @@ input::-webkit-inner-spin-button {
     overflow-y: scroll;
 }
 
+.ProseMirror {
+    border-color: black !important;
+}
+
+.ProseMirror:focus-visible {
+    border: 2px solid var(--piperDarkBlue) !important;
+}
 
 #fileNameInputEdit:focus + #tooltip{
     transition: 0.3s;
@@ -337,7 +388,7 @@ input::-webkit-inner-spin-button {
 
 #categorySelect {
     width: 20vw;
-    margin: 10px;
+    margin: 10px 0px;
 }
 
 
@@ -358,6 +409,16 @@ input::-webkit-inner-spin-button {
     height: 25px;
     border-radius: 5px;
     border: none;
+    padding: 5px;
+    transition-property: background-color;
+    transition-duration: .6s;
+}
+
+#searchBox:focus-visible {
+    outline: 2px solid var(--piperDarkBlue);
+    transition-property: background-color;
+    transition-duration: .6s;
+    background-color: #a4d2ff63;
 }
 
 .resultPage {

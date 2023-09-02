@@ -191,7 +191,7 @@ const MenuBar = ({ editor }) => {
       >
         <i className="fa-solid fa-rotate-right"></i>
       </button>
-      <button onClick={addImage}><i className="fa-regular fa-image"></i></button>
+      <button onClick={addImage}><i className="fa-solid fa-image"></i></button>
     </div>
   )
 }
@@ -255,7 +255,7 @@ const EntryPage = () => {
     <div>
         <form id='mainSubmit' action="/rich" method="POST">
             <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
-            <h5>This will be needed to save the page</h5>
+            <span>    This is needed to make a submission</span>
 
             <input className="createFormInput" id="fileNameInput" placeholder='Page Title' name="fileName"></input> <br />
 

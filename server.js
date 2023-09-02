@@ -31,6 +31,8 @@ const s3Config = {
   region: "eu-west-2",
 };
 
+
+
 const s3Client = new S3Client(s3Config);
 
 
@@ -69,7 +71,8 @@ app.get("/api", async (req, res)=>{
   try {
     var directories = await s3.listObjectsV2(dirParams).promise();
   } catch (e) {
-    console.log(e)
+    console.log(e);
+    console.log(s3Config.accessKeyId);
   };
   
   s3Directories = directories.CommonPrefixes.map((item)=>{

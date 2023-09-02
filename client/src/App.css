@@ -66,6 +66,7 @@ header {
 .navLink i {
     font-size: 1.4em;
     margin: 5px 10px;
+    width: 70px;
 }
 
 .indexLink {
@@ -196,11 +197,12 @@ header {
     max-width: calc(100vw - 195px);
     padding: 20px;
     box-sizing: border-box;
+    padding-right: 115px;
 }
 
 #guidePoints {
     padding: 0px 20px;
-    line-height: 1.5;
+    line-height: 2;
     margin-top: 50px;
 }
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 
 function IndexItem(props){
 
-    const name = props.name
+    const name = props.filename;
 
 
     return (

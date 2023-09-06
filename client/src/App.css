@@ -246,6 +246,8 @@ header {
 #authCodeInput {
     margin: 5px 20px 10px 0px;
     text-align: center;
+    border: 2px solid var(--piperMidBrown);
+    
 }
 
 #nameInput {
@@ -263,6 +265,7 @@ header {
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.6;
+    border: 2px solid var(--piperMidBrown);
 }
 
 #fileNameInput:focus-visible {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, h2, NavLink, Link } from 'react-router-dom';
 import '../App.css';
+import IndexItem from './listItem.js';
 
 
 // Lexical imports
@@ -218,7 +219,8 @@ function PageIndex(){
                                             <div className="testItems collapsible collapsed">
                                                 {fullData[item].map((name, i)=>(
                                                     <div key={i} onClick={SetPage}>
-                                                        <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                                        <IndexItem filename={name} key={name}/>
+
                                                     </div>
                                                 ))}
                                             </div>

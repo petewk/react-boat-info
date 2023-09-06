@@ -26,6 +26,7 @@
     h5,
     h6 {
       line-height: 1.1;
+      background-color: red;
     }
   
     code {
@@ -69,4 +70,15 @@
   margin: 10px auto;
   text-align: left;
   width: 80vw;
+  background-color: #0b3c62;
+  padding: 5px;
+}
+
+#editorToolbar button {
+  border: 1px solid #a58d6f;
+  margin: 2px;
+}
+
+#editorToolbar .fa-solid {
+  font-size: 1em;
 }

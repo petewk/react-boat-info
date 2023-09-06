@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
 
-function IndexItem({name}){
+function IndexItem(props){
+
+    const name = props.name
 
 
     return (

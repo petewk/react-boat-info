@@ -9,12 +9,12 @@ function SuggestPage(){
   const sendEmail = (e) => {
     e.preventDefault();
 
-    // emailjs.sendForm('gmail', 'template_ydhaxgp', form.current, 'user_heirvKnCxfrzglNjmpMqw')
-    //   .then((result) => {
-    //       console.log(result.text);
-    //   }, (error) => {
-    //       console.log(error.text);
-    //   });
+    emailjs.sendForm('gmail', 'template_ydhaxgp', form.current, 'user_heirvKnCxfrzglNjmpMqw')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
 
     document.getElementById('alertWindow').classList.toggle('fadeIn');
     document.getElementById('alertBox').classList.add('slide');

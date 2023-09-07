@@ -9,14 +9,15 @@ function SuggestPage(){
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('gmail', 'template_ydhaxgp', form.current, 'user_heirvKnCxfrzglNjmpMqw')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
+    // emailjs.sendForm('gmail', 'template_ydhaxgp', form.current, 'user_heirvKnCxfrzglNjmpMqw')
+    //   .then((result) => {
+    //       console.log(result.text);
+    //   }, (error) => {
+    //       console.log(error.text);
+    //   });
 
     document.getElementById('alertWindow').classList.toggle('fadeIn');
+    document.getElementById('alertBox').classList.add('slide');
 
 
   };
@@ -24,7 +25,7 @@ function SuggestPage(){
     return(
         <>
             <div className="suggestPage">
-                <h1>Make a suggestion</h1>
+                <h1>Let us know what you'd like to see</h1>
                 <form ref={form} onSubmit={sendEmail}>
                     <input placeholder="Your name (Optional)" name="name"></input> <br />
                     <input type="email" placeholder="Email (Optional)" name="email"></input><br />

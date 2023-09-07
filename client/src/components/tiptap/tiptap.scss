@@ -66,12 +66,20 @@
     }
   }
 
+  .ProseMirror:focus-visible {
+    box-shadow: 0px 0px 10px var(--piperDarkBlue);
+  }
+
 #editorToolbar {
   margin: 10px auto;
   text-align: left;
   width: 80vw;
-  background-color: #0b3c62;
+  background-color: var(--lavender);
   padding: 5px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #editorToolbar button {

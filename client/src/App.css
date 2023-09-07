@@ -1,6 +1,8 @@
 :root {
     --piperDarkBlue: #0b3c62;
     --piperMidBrown: #a58d6f;
+    --lavender: #e9ebf8;
+    --redBean: #2d0605;
   }
 
 body {
@@ -124,6 +126,7 @@ header {
 }
 
 
+
 #displayDiv {
     background-color: whitesmoke;
     border: 1px solid green;
@@ -200,10 +203,20 @@ header {
     padding-right: 115px;
 }
 
+#defaultScreen {
+    width: 55vw;
+    color: var(--redBean);
+    padding: 20px;
+    background-color: var(--lavender);
+    border: 2px solid var(--piperDarkBlue);
+    border-radius: 5px;
+}
+
 #guidePoints {
     padding: 0px 20px;
     line-height: 2;
     margin-top: 50px;
+    font-weight: bold;
 }
 
 #textPage a {
@@ -231,6 +244,10 @@ header {
 
 
 /* Input submit page styling */
+
+#mainSubmitContainer {
+    margin-top: 20px;
+}
 
 #mainSubmit {
     margin-top: 2vh;
@@ -268,11 +285,12 @@ header {
     border: 2px solid var(--piperMidBrown);
 }
 
-#fileNameInput:focus-visible {
+#fileNameInput:focus-visible, #authCodeInput:focus-visible {
     outline: 1px solid var(--piperDarkBlue);
     transition-property: background-color;
     transition-duration: .6s;
     background-color: #a4d2ff63;
+    box-shadow: 0px 0px 7px var(--piperMidBrown);
 }
 
 input::-webkit-outer-spin-button,
@@ -330,9 +348,7 @@ input::-webkit-inner-spin-button {
 #editorToolbar {
     margin: 10px auto !important;
     margin-right: 10vw !important;
-    text-align: right !important;
     width: 38vw !important;
-    display: inline-block;
     float: right;
 }
 
@@ -448,6 +464,9 @@ input::-webkit-inner-spin-button {
     border-radius: 5px;
     margin: 30px auto 0 auto;
     text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border: 2px solid var(--piperMidBrown);
 }
 
 .suggestPage textarea {
@@ -457,6 +476,9 @@ input::-webkit-inner-spin-button {
     font-size: 1.2em;
     border-radius: 5px;
     margin: 30px auto 30px auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border: 2px solid var(--piperMidBrown);
 }
 
 .suggestPage button {
@@ -478,10 +500,19 @@ input::-webkit-inner-spin-button {
     transition: 0.3s;
 }
 
+@keyframes slideIn {
+    0% {top: -50vh}
+    100% {top: 10vh};
+}
+
 .fadeIn {
     z-index: 100 !important;
     transition: 0.3s;
     display: block !important;
+}
+
+.slide {
+    animation: slideIn .4s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 #alertBox {
@@ -490,9 +521,9 @@ input::-webkit-inner-spin-button {
     border: 2px solid var(--piperMidBrown);
     text-align: center;
     margin: 0 auto;
-    height: 40vh;
+    height: 30vh;
     border-radius: 12px;
-    top: 20vh;
+    top: -50vh;
     position: fixed;
     left: 30vw;
     box-shadow: 11px 11px 45px 0px;
@@ -500,7 +531,7 @@ input::-webkit-inner-spin-button {
 
 #thanks {
     color: var(--piperDarkBlue);
-    padding: 40px 0px;
+    padding: 20px 0px;
     text-decoration: underline;
     font-size: 1.7em;
 }

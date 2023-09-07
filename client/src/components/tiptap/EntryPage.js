@@ -252,10 +252,9 @@ const EntryPage = () => {
   
 
   return (
-    <div>
+    <div id="mainSubmitContainer">
         <form id='mainSubmit' action="/rich" method="POST">
             <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
-            <span>    This is needed to make a submission</span>
 
             <input className="createFormInput" id="fileNameInput" placeholder='Page Title' name="fileName"></input> <br />
 
@@ -271,7 +270,7 @@ const EntryPage = () => {
             <input  id="hiddenForm" className="hiddenForm" name="hiddenForm"></input> <br />
             <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="create"></input>
 
-            <button>SAVE</button>
+            <button><i class="fa-regular fa-floppy-disk"></i></button>
         </form>
             <MenuBar editor={editor} />
             <EditorContent editor={editor} />

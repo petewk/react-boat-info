@@ -260,7 +260,7 @@ function PageIndex(){
 
             <div id="textPage">
                 {fileCurr === '' ? (
-                    <>
+                    <div id="defaultScreen">
                     <h2>Welcome to the boat info wiki page, select a file from the left to view info, or use the button at the top to create a new file</h2>
                     <div>
                         <ul id="guidePoints">
@@ -269,7 +269,7 @@ function PageIndex(){
                             <li>If you have a suggestion for information you'd like so see a page on which you can't find, or would like to request permission to create/edit new pages, please fill out the Suggestion form through the link in the top right of your screen</li>
                         </ul>
                     </div>
-                    </>
+                    </div>
                 ) : (
                     
                     <>

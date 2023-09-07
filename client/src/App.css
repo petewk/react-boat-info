@@ -314,10 +314,12 @@ input::-webkit-inner-spin-button {
     right: 0;
     bottom: 40px;
     margin: auto;
-    width: 250px;
+    width: 150px;
     height: 40px;
     background-color: #bcb9ff;
-    border: 1px solid var(--piperDarkBlue)
+    border: 1px solid var(--piperDarkBlue);
+    font-size: 2em;
+    color: var(--piperDarkBlue);
 }
 
 #textEditor {

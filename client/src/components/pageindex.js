@@ -4,7 +4,7 @@ import '../App.css';
 import IndexItem from './listItem.js';
 
 
-// Lexical imports
+// Tiptap imports
 
 import { Color } from '@tiptap/extension-color'
 import Bold from '@tiptap/extension-bold';
@@ -18,6 +18,10 @@ import { generateHTML } from '@tiptap/react';
 import {Link as Link1} from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Dropcursor from '@tiptap/extension-dropcursor';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 
 
 function PageIndex(){

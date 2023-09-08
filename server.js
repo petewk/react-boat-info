@@ -245,9 +245,9 @@ app.post("/rich", (request, res)=>{
             res.redirect("https://boat-wiki.herokuapp.com/success");
 
             
-            fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{
-                if (err) throw err;
-            });
+            // fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{
+            //     if (err) throw err;
+            // });
 
 
             //THIS SECTION FOR SAVING FILES TO S3

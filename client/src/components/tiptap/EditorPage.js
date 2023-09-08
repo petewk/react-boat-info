@@ -274,7 +274,7 @@ const EntryPage = () => {
 
   return (
     <div>
-        <form id='mainSubmit' action="http://localhost:5000/rich" method="POST">
+        <form id='mainSubmit' action="/rich" method="POST">
             <input className="createFormInput" name="authCode" id="authCodeInput"  placeholder='Enter auth code here' type="number" required></input>
             <h5>This will be needed to save the page</h5>
 

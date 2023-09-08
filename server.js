@@ -257,7 +257,7 @@ app.post("/rich", (request, res)=>{
             s3.putObject({
               Body: JSON.stringify(body),
               Bucket: 'boat-info-bucket',
-              Key: request.body.category + '/' + fileName +'.json'
+              Key: request.body.category.replace('-', ' ') + '/' + fileName +'.json'
             }).promise();
 
             

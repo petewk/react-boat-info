@@ -71,6 +71,10 @@ app.get("/api", async (req, res)=>{
   try {
     var directories = await s3.listObjectsV2(dirParams).promise();
   } catch (e) {
+    var directories = {
+      CommonPrefixes: [],
+      two: "bye"
+    };
     console.log(e);
     console.log(s3Config.accessKeyId);
   };

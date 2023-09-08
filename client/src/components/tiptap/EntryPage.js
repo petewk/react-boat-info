@@ -14,6 +14,10 @@ import { generateHTML } from '@tiptap/react';
 import Link from '@tiptap/extension-link';
 import Dropcursor from '@tiptap/extension-dropcursor';
 import Image from '@tiptap/extension-image';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 
 
 
@@ -192,6 +196,30 @@ const MenuBar = ({ editor }) => {
         <i className="fa-solid fa-rotate-right"></i>
       </button>
       <button onClick={addImage}><i className="fa-solid fa-image"></i></button>
+      <button
+        onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+        }
+      >
+        <i class="fa-solid fa-table"></i>
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addColumnBefore().run()}>
+        Column Before
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addColumnAfter().run()}>Column After</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteColumn().run()}>Delete Column</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addRowBefore().run()}>Row Before</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addRowAfter().run()}>Row After</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteRow().run()}>Delete Row</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteTable().run()}>Delete Table</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderColumn().run()}>
+        Header Column
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderRow().run()}>
+        Header Row
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderCell().run()}>
+        Header Cell
+      </button>
     </div>
   )
 }
@@ -216,6 +244,12 @@ const EntryPage = () => {
 
   const editor = useEditor({
     extensions: [
+    Table.configure({
+        resizable: true,
+      }),
+    TableRow,
+    TableHeader,
+    TableCell,
     Underline,
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       TextStyle.configure({ types: [ListItem.name] }),

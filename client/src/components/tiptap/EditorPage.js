@@ -193,15 +193,24 @@ const MenuBar = ({ editor }) => {
       >
         <i class="fa-solid fa-table"></i>
       </button>
-      <button onClick={() => editor.chain().focus().addColumnBefore().run()}>
-        addColumnBefore
+      <button className='tableButtons' onClick={() => editor.chain().focus().addColumnBefore().run()}>
+        Column Before
       </button>
-      <button onClick={() => editor.chain().focus().addColumnAfter().run()}>addColumnAfter</button>
-      <button onClick={() => editor.chain().focus().deleteColumn().run()}>deleteColumn</button>
-      <button onClick={() => editor.chain().focus().addRowBefore().run()}>addRowBefore</button>
-      <button onClick={() => editor.chain().focus().addRowAfter().run()}>addRowAfter</button>
-      <button onClick={() => editor.chain().focus().deleteRow().run()}>deleteRow</button>
-      <button onClick={() => editor.chain().focus().deleteTable().run()}>deleteTable</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addColumnAfter().run()}>Column After</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteColumn().run()}>Delete Column</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addRowBefore().run()}>Row Before</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().addRowAfter().run()}>Row After</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteRow().run()}>Delete Row</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().deleteTable().run()}>Delete Table</button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderColumn().run()}>
+        Header Column
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderRow().run()}>
+        Header Row
+      </button>
+      <button className='tableButtons' onClick={() => editor.chain().focus().toggleHeaderCell().run()}>
+        Header Cell
+      </button>
     </div>
   )
 }
@@ -279,7 +288,7 @@ const EntryPage = () => {
             <input  id="hiddenFormtype" className="hiddenForm" name="hiddenFormtype" value="edit"></input>
             <input id="hiddenDir" name="category" className="hiddenForm" value={category}/>
 
-            <button>Click to submit file</button>
+            <button><i class="fa-regular fa-floppy-disk"></i></button>
 
         </form>
             <MenuBar editor={editor} />

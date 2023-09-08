@@ -98,6 +98,12 @@ header {
 
 .directoryHeader {
     padding: 0px 10px;
+    font-weight: bold;
+    color: var(--piperDarkBlue)
+}
+
+.directoryHeader i {
+    float: right;
 }
 
 .fa-solid {

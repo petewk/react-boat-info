@@ -134,6 +134,10 @@ function PageIndex(){
                     Link1,
                     Image,
                     Dropcursor,
+                    TableRow,
+                    TableHeader,
+                    TableCell,
+                    Table,
                 ]));
             }
         );

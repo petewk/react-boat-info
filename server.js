@@ -54,7 +54,7 @@ const e = require('express');
 const db = mysql.createPool({
     host: 'eu-cdbr-west-03.cleardb.net',
     user: 'b218872c6def64',
-    password: '6dc23cff',
+    password: process.env.CLEARDB_PASSWORD_BOATINFO,
     database: 'heroku_88822737ee106d6'
 });
 

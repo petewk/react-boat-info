@@ -225,12 +225,21 @@ function PageIndex(){
                                         <div key={i}>
                                             <p onClick={collapseTest} className='directoryHeader'>{item[0].toUpperCase() + item.substring(1).replaceAll('-', ' ')}<i className="fa-solid fa-sort-down"></i></p>
                                             <div className="testItems collapsible collapsed">
-                                                {fullData[item].map((name, i)=>(
+                                                {
+                                                    fullData[item].length > 0 ? 
+                                                
+                                                fullData[item].map((name, i)=>(
                                                     <div key={i} onClick={SetPage}>
                                                         <IndexItem filename={name} key={name}/>
 
                                                     </div>
-                                                ))}
+                                                ))
+                                            
+                                                    :
+
+                                                    <p>Nothing here yet!</p>
+                                            
+                                            }
                                             </div>
                                         </div>
                                     ))}
@@ -286,7 +295,7 @@ function PageIndex(){
                         </h1>
                         <div dangerouslySetInnerHTML={{__html: bodyHTML}}>{}</div>
                         <Link to="/edit">
-                        <button id="editButton">Edit text</button>
+                        <button id="editButton">Edit <i class="fa-solid fa-pen"></i></button>
                         </Link>
                         
                     </>

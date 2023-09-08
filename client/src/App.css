@@ -191,6 +191,13 @@ header {
 
 #editButton{
     margin: 10px 0px;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    background-color: var(--lavender);
+    border: 2px solid var(--redBean);
+    padding: 7px;
+    border-radius: 3px;
 }
 
 #textPage {

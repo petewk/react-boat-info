@@ -237,7 +237,7 @@ function PageIndex(){
                                             
                                                     :
 
-                                                    <p>Nothing here yet!</p>
+                                                    <p className="emptyDirectory">Nothing here yet!</p>
                                             
                                             }
                                             </div>

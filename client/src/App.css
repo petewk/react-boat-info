@@ -169,6 +169,13 @@ header {
     animation: spinup .2s forwards ease-in;
 }
 
+.emptyDirectory {
+    padding-left: 20px;
+    color: var(--redBean);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
 @keyframes spinup{
     from {
         transform: rotate(0deg)

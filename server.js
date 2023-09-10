@@ -5,6 +5,7 @@ const fs = require('fs');
 const port = process.env.PORT || 5000;
 const fileupload = require('express-fileupload');
 const AWS = require('aws-sdk');
+const multer = require('multer');
 
 
 
@@ -217,6 +218,32 @@ app.get('/success', function(req, res) {
       }
     })
   });
+
+app.post('/pdf', (request, res)=>{
+  
+  console.log('posting PDF');
+  const authCode = request.body.authCode;
+  console.log(request.body.file);
+
+
+  authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
+  db.query(authQuery, [authCode], (req, response)=>{
+      if(response.length===0){
+
+          res.redirect("https://boat-wiki.herokuapp.com/failure")
+
+      } else {
+          res.redirect("https://boat-wiki.herokuapp.com/success");
+
+      s3.putObject({
+        Body: request.body.file,
+        Bucket: 'boat-info-bucket',
+        Key: 'Test Files/' + request.body.fileName
+      })
+
+  }})
+
+});
 
 
 app.post("/rich", (request, res)=>{

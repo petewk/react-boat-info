@@ -99,7 +99,8 @@ header {
 .directoryHeader {
     padding: 0px 10px;
     font-weight: bold;
-    color: var(--piperDarkBlue)
+    color: var(--piperDarkBlue);
+    cursor: pointer;
 }
 
 .directoryHeader i {

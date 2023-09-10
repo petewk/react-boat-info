@@ -7,6 +7,7 @@ import Failure from './components/failure';
 import Editor from './components/tiptap/EditorPage';
 import EntryPage from './components/tiptap/EntryPage.js';
 import SuggestPage from './components/suggest.js';
+import FileUpload from './components/upload.js'
 
 
 function App(){
@@ -40,6 +41,7 @@ function App(){
                         ):(
                             <>
                             <div><Link className="navLink" to="submit" onClick={showForm}><i class="fa-solid fa-pen-to-square"></i> <br /> <b>Submit</b></Link></div>
+                            <div><Link className="navLink" to="/upload" onClick={setReturn}><i class="fa-regular fa-file-pdf"></i> <br /> <b>Upload</b></Link></div>
                             <div><Link className="navLink" to="/suggest" onClick={setReturn}><i class="fa-regular fa-envelope"></i> <br /> <b>Suggest</b></Link></div>
                             </>
                         )}
@@ -51,6 +53,7 @@ function App(){
                 <Routes>                 
                     <Route path="/" element={<PageIndex />}/>
                     <Route path="/edit" element={<Editor />}/>
+                    <Route path="/upload" element={<FileUpload />}/>
                     <Route path="/success" element={<Success />}/>
                     <Route path="/failure" element={<Failure />}/>
                     <Route path="/submit" element={<EntryPage/>}/>

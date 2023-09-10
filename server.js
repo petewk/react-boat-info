@@ -77,7 +77,6 @@ app.get("/api", async (req, res)=>{
       two: "bye"
     };
     console.log(e);
-    console.log(s3Config.accessKeyId);
   };
   
   s3Directories = directories.CommonPrefixes.map((item)=>{
@@ -113,7 +112,6 @@ app.get("/api", async (req, res)=>{
     newArray.push(item.Prefix)
   });
 
-  console.log(newArray);
   
   s3Directories.map((directory)=>{
     newArray.map((item)=>{
@@ -123,7 +121,6 @@ app.get("/api", async (req, res)=>{
     })
   });
 
-  console.log(fulls3Array);
 
 
    
@@ -220,7 +217,7 @@ app.get('/success', function(req, res) {
   });
 
 app.post('/pdf', (request, res)=>{
-  
+
   console.log('posting PDF');
   const authCode = request.body.authCode;
   console.log(request.body.file);
@@ -238,7 +235,7 @@ app.post('/pdf', (request, res)=>{
       s3.putObject({
         Body: request.body.file,
         Bucket: 'boat-info-bucket',
-        Key: 'Test Files/' + request.body.fileName
+        Key: 'Test Files/' + request.body.fileName + '.pdf'
       })
 
   }})

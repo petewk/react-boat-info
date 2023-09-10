@@ -6,7 +6,7 @@ function FileUpload(){
     return(
         <>
             <h4>Upload files here</h4>
-            <form action='/pdf' method='POST'>
+            <form action='/pdf' method='POST' enctype="multipart/form-data">
                 <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
                 <input className="createFormInput" id="fileNameInput" placeholder='Page Title' name="fileName"></input> <br />
                 <input type='file' name="file"></input>

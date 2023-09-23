@@ -1,22 +1,29 @@
 const express = require ('express');
+const app = express();
+
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
 const bodyParser = require ('body-parser');
 const path = require('path');
 const fs = require('fs');
 const port = process.env.PORT || 5000;
 const fileupload = require('express-fileupload');
 const AWS = require('aws-sdk');
-const multer = require('multer');
+const Base64 = require('js-base64');
 
 
 
 
+const util  = require('util');
 
-const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const s3 = new AWS.S3();
 app.use(fileupload());
+
+const Base64Encode = require('base64-stream');
 
 
 // This is for setting up connection to the S3 client for saving files
@@ -27,8 +34,11 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Config = {
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  // accessKeyId: process.env.AWS_ACCESS_KEY,
+  // secretAccessKey: process.env.AWS_ACCESS_SECRET,
+  accessKeyId: 'AKIA6KCLYZEP2HPEAYUW',
+  secretAccessKey: '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',
+
   region: "eu-west-2",
 };
 
@@ -40,14 +50,6 @@ const s3Client = new S3Client(s3Config);
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-// Didn't need this, actually broke it, but keeping here
-//   // Handle React routing, return all requests to React app
-//   app.get('*', function(req, res) {
-//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-//   });
-
-
-// mysql://b218872c6def64:6dc23cff@eu-cdbr-west-03.cleardb.net/heroku_88822737ee106d6?reconnect=true
 
 const mysql = require('mysql2'); 
 const e = require('express');
@@ -55,12 +57,14 @@ const e = require('express');
 const db = mysql.createPool({
     host: 'eu-cdbr-west-03.cleardb.net',
     user: 'b218872c6def64',
-    password: process.env.CLEARDB_PASSWORD_BOATINFO,
+    // password: process.env.CLEARDB_PASSWORD_BOATINFO,
+    password: '6dc23cff',
     database: 'heroku_88822737ee106d6'
 });
 
 
 app.get("/api", async (req, res)=>{
+
 
   // GETS THE DIRECTORIES FROM S3
 
@@ -72,10 +76,6 @@ app.get("/api", async (req, res)=>{
   try {
     var directories = await s3.listObjectsV2(dirParams).promise();
   } catch (e) {
-    var directories = {
-      CommonPrefixes: [],
-      two: "bye"
-    };
     console.log(e);
   };
   
@@ -94,14 +94,21 @@ app.get("/api", async (req, res)=>{
   });
 
 
+
   const fileParams = {
     Bucket: 'boat-info-bucket',
-    Delimiter: '.json',
+    Delimiter: '.json'
   };
 
 
+  const fileParamsPDF = {
+    Bucket: 'boat-info-bucket',
+    Delimiter: '.pdf'
+  }
+
   try {
-    rawArray = await s3.listObjectsV2(fileParams).promise()
+    rawArray = await s3.listObjectsV2(fileParams).promise();
+    rawArrayPDF = await s3.listObjectsV2(fileParamsPDF).promise();
   } catch(e) {
     console.log(e)
   };
@@ -112,6 +119,10 @@ app.get("/api", async (req, res)=>{
     newArray.push(item.Prefix)
   });
 
+  rawArrayPDF.CommonPrefixes.forEach((item)=>{
+    newArray.push(item.Prefix)
+  });
+  
   
   s3Directories.map((directory)=>{
     newArray.map((item)=>{
@@ -121,6 +132,7 @@ app.get("/api", async (req, res)=>{
     })
   });
 
+    
 
 
    
@@ -137,7 +149,22 @@ app.get("/api", async (req, res)=>{
 
     // });
 
-    res.json({directoryInfo: fulls3Array, fileBodies: filesFull});
+    
+    
+    // Lets get the info from Mysql db here to display recent updates
+    
+    
+    updatesQuery = "SELECT * FROM edits_submits limit 10";
+    const asyncQuery = util.promisify(db.query).bind(db);
+    
+
+    (async()=>{
+        dbLogs = await asyncQuery(updatesQuery);
+        
+        res.json({directoryInfo: fulls3Array, fileBodies: filesFull, updateLogs: dbLogs});
+    })();
+
+    
 
     });
 
@@ -145,7 +172,6 @@ app.get("/api", async (req, res)=>{
 
 app.post("/getText", async (req, res)=>{
 
-  console.log(req.body.fileName);
 
   params = {
     Key: req.body.folder + '/' + req.body.fileName,
@@ -160,8 +186,13 @@ app.post("/getText", async (req, res)=>{
     console.log(e)
   };
 
-  let parseFile = JSON.parse(file.Body);
-  res.send(parseFile);
+
+  if (req.body.fileName.includes('.json')){
+    let parseFile = JSON.parse(file.Body);
+    res.send(parseFile);
+  } else {
+    res.send(file.Body);
+  }
   
 });
 
@@ -216,31 +247,42 @@ app.get('/success', function(req, res) {
     })
   });
 
-app.post('/pdf', (request, res)=>{
-
-  console.log('posting PDF');
-  const authCode = request.body.authCode;
-  console.log(request.body.file);
 
 
-  authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
-  db.query(authQuery, [authCode], (req, response)=>{
-      if(response.length===0){
+  app.post('/pdf', function (req, res) {
 
-          res.redirect("https://boat-wiki.herokuapp.com/failure")
+    fileInfo = req.files.fileSent;
+    const authCode = req.body.authCode;
 
-      } else {
-          res.redirect("https://boat-wiki.herokuapp.com/success");
+    authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
+    db.query(authQuery, [authCode], (req, response)=>{
+        if(response.length===0){
+  
+            res.redirect("https://boat-wiki.herokuapp.com/failure")
+  
+        } else {
+            res.redirect("https://boat-wiki.herokuapp.com/success");
+  
+            s3.putObject({
+              Body: fileInfo.data,
+              Bucket: 'boat-info-bucket',
+              Key:  'Test Files/' + fileInfo.name, 
+            }).promise();
 
-      s3.putObject({
-        Body: request.body.file,
-        Bucket: 'boat-info-bucket',
-        Key: 'Test Files/' + request.body.fileName + '.pdf'
-      })
+            const date = new Date();
+            const type = 'pdf';
+            const sqlInsertComb = "INSERT INTO edits_submits (date, type, page_name, made_by) VALUES (?,?,?,?)";
+                db.query(sqlInsertComb, [date, type, fileInfo.name, authCode]);
 
-  }})
+                console.log('inserting');
 
-});
+  
+    }})
+
+
+  })
+  
+
 
 
 app.post("/rich", (request, res)=>{
@@ -256,8 +298,6 @@ app.post("/rich", (request, res)=>{
 
     const authCode = request.body.authCode;
     const type = request.body.hiddenFormtype;
-    console.log(authCode);
-    console.log(type);
 
     authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
     db.query(authQuery, [authCode], (req, response)=>{
@@ -269,10 +309,6 @@ app.post("/rich", (request, res)=>{
             res.redirect("https://boat-wiki.herokuapp.com/success");
 
             
-            // fs.writeFileSync(__dirname + '/textfiles/' + request.body.category + '/' + fileName + '.json', JSON.stringify(body), (err)=>{
-            //     if (err) throw err;
-            // });
-
 
             //THIS SECTION FOR SAVING FILES TO S3
 
@@ -289,16 +325,23 @@ app.post("/rich", (request, res)=>{
             const date = new Date();
 
             if(type==="create"){
-                const sqlInsert = "INSERT INTO page_creation (creation_date, page_name, created_by) VALUES (?,?,?)";
+                const sqlInsertComb = "INSERT INTO edits_submits (date, type, page_name, made_by) VALUES (?,?,?,?)";
+                db.query(sqlInsertComb, [date, type, fileName, authCode]);
 
-                db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
+                console.log('inserting');
+                
+                // const sqlInsert = "INSERT INTO page_creation (creation_date, page_name, created_by) VALUES (?,?,?)";
+                // db.query(sqlInsert, [date, fileName, authCode], (err, result)=>{
     
-                    if (err){console.log(err)} 
-                    console.log(result);
-    
-      
-                });
+                //     if (err){console.log(err)} 
+                //     console.log(result);
+                // });
+                
             } else if(type==="edit"){
+
+              const sqlInsertComb = "INSERT INTO edits_submits (date, type, page_name, made_by) VALUES (?,?,?,?)";
+              db.query(sqlInsertComb, [date, type, fileName, authCode]);
+              
                 const sqlInsert = "INSERT INTO page_edits (change_date, category, page_name, changed_by) VALUES (?,?,?,?)";
 
                 db.query(sqlInsert, [date, 'test', fileName, authCode], (err, result)=>{

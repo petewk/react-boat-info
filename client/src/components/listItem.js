@@ -7,7 +7,15 @@ function IndexItem(props){
 
 
     return (
-        <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+        <>
+        {
+            name.includes('.pdf') ?
+            <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -4).replaceAll('-', " ")}<i class="fa-regular fa-file-pdf searchMenuPDF"></i></h5>
+            :
+
+            <h5 className="indexLink" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+        }
+        </>
     )
 }
 

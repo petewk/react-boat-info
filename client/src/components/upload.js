@@ -4,15 +4,15 @@ import '../App.css';
 function FileUpload(){
 
     return(
-        <>
-            <h4>Upload files here</h4>
+        <div id="uploadContainer">
+            <h4>You can upload PDF files here</h4>
+            <h5>File name will show in the index</h5>
             <form action='/pdf' method='POST' enctype="multipart/form-data">
-                <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input>
-                <input className="createFormInput" id="fileNameInput" placeholder='Page Title' name="fileName"></input> <br />
-                <input type='file' name="file"></input>
+                <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input> <br />
+                <input id="pdfSelector" type='file' name="fileSent"></input> <br />
                 <button>Submit</button>
             </form>
-        </>
+        </div>
     )
 }
 

@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, h2, NavLink, Link } from 'react-router-dom';
+import React, { useEffect, useState, forwardRef,  useImperativeHandle } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import '../App.css';
 import IndexItem from './listItem.js';
+import UpdatesSection from './updates.js';
+
 
 
 // Tiptap imports
@@ -23,12 +25,30 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 
+import { Document, Page, pdfjs } from 'react-pdf';
+import { Base64 } from 'js-base64';
 
-function PageIndex(){
+
+const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.js',
+    import.meta.url,
+  ).toString();
+
+
+
+const PageIndex = forwardRef((props, ref)=>{
+    useImperativeHandle(ref, ()=>({
+        setBlankPage(){
+            setFileCurr('')
+        },
+    }))
+
 
     const [backendData, setBackendData] = useState([{}]);
 
-    const [fileCurr, setFileCurr] = useState('');
+    const [fileCurr, setFileCurr] = useState(props.fileCurr);
     const [edit, setEdit] = useState(false);
 
     // Setting the text page contents
@@ -52,6 +72,18 @@ function PageIndex(){
 
     // full directories/files object
     const [fullData, setFullData] = useState({});
+    const [updates, setUpdates] = useState([]);
+
+
+    // store PDF
+    const [pdfFile, setpdfFile] = useState('');
+    const [numPages, setnumPages] = useState();
+    const [pageNumber, setPageNumber] = useState(1);
+
+    function onDocumentLoadSuccess(pdf){
+        setnumPages(pdf._pdfInfo.numPages);
+      }
+
 
 
 
@@ -61,7 +93,7 @@ function PageIndex(){
             response => response.json()
         ).then(
             data => {
-                console.log(data.directoryInfo);
+                setUpdates(data.updateLogs);
                 setFullData(data.directoryInfo);
                 setDirectories(Object.keys(data.directoryInfo).sort());
                 setFileData(data.fileBodies)
@@ -78,7 +110,6 @@ function PageIndex(){
                 setFiles(holdingArrBodies);
                 setFileNames(holdingArrNames);
             }
-            
         );
     }, []);
 
@@ -94,16 +125,28 @@ function PageIndex(){
         return result;
     };
 
+    
+
 
     function SetPage(e){
 
-        console.log(e.target);
-        var fileAtt = e.target.attributes.filename.value;
+        let fileAtt;
+        let fileNametemp;
+        
+        if(e.target.classList.contains('fa-file-pdf')){
+            fileAtt = e.target.parentElement.attributes.filename.value;
+            fileNametemp = e.target.parentElement.innerHTML;
+        } else {
+            fileAtt = e.target.attributes.filename.value;
+            fileNametemp = e.target.innerHTML;
+        }
+
+        console.log(fileAtt);
         
         //get current file name and set current file
         setFileCurr(fileAtt);
-        var fileNametemp = e.target.innerHTML;
-        setFileTitle(fileNametemp);
+
+        setFileTitle(fileNametemp.split('<')[0]);
 
     
         var data = {
@@ -111,6 +154,11 @@ function PageIndex(){
             "fileName": fileAtt
         };
         setThisDir(findDir(fileAtt));
+
+
+        function base64encode(str) {
+            return btoa(unescape(encodeURIComponent(str)))
+          }
        
 
         const requestOptions = {
@@ -120,34 +168,77 @@ function PageIndex(){
             body: JSON.stringify(data)
         };
 
+        if (fileAtt.includes('.pdf')){
+            fetch('/getText', requestOptions).then(
+                response=>response.body
+            ).then(              
+                data=>{
+                    const reader = data.getReader();
+                    return new ReadableStream({
+                      start(controller) {
+                        return pump();
+                        function pump() {
+                          return reader.read().then(({ done, value }) => {
+                            // When no more data needs to be consumed, close the stream
+                            if (done) {
+                              controller.close();
+                              return;
+                            }
+                            // Enqueue the next data chunk into our target stream
+                            controller.enqueue(value);
+                            return pump();
+                          });
+                        }
+                      },
+                    });
+                  })
+                  // Create a new response out of the stream
+                  .then((stream) => new Response(stream))
+                  // Create an object URL for the response
+                  .then((response) => response.blob())
+                  .then((blob) => URL.createObjectURL(blob))
+                  // Update image
+                  .then((url) => setpdfFile(url))
+                  .catch((err) => console.error(err));
+        } else {
+            fetch('/getText', requestOptions).then(
+                response=>response.json()
+            ).then(
+                data=>{
+                    setBodyHTML(generateHTML(data, [
+                        Color,
+                        TextStyle,
+                        Underline,
+                        StarterKit,
+                        Link1,
+                        Image,
+                        Dropcursor,
+                        TableRow,
+                        TableHeader,
+                        TableCell,
+                        Table,
+                    ]));
+                }
+            );
+        }
 
-        fetch('/getText', requestOptions).then(
-            response=>response.json()
-        ).then(
-            data=>{
-                console.log(data)
-                setBodyHTML(generateHTML(data, [
-                    Color,
-                    TextStyle,
-                    Underline,
-                    StarterKit,
-                    Link1,
-                    Image,
-                    Dropcursor,
-                    TableRow,
-                    TableHeader,
-                    TableCell,
-                    Table,
-                ]));
-            }
-        );
-        
-        
-        
-
-        
 
     }
+
+
+    function pageUp(){
+        if(pageNumber < numPages){
+            setPageNumber(pageNumber + 1)
+        }
+
+    }
+
+    function pageDown(){
+        if(pageNumber > 1){
+            setPageNumber(pageNumber - 1)
+        }
+    }
+    
 
     // store this info to local storage for the editor option
     useEffect(()=>{
@@ -184,15 +275,21 @@ function PageIndex(){
     }
 
     function collapseTest(e){
-        const clickTarget = e.target.nextElementSibling;
+        let clickTarget;
+        let arrow;
+        if(e.target.classList.contains('fa-solid')){
+            clickTarget = e.target.parentElement.nextElementSibling;
+            arrow = e.target;
+        } else {
+            clickTarget = e.target.nextElementSibling;
+            arrow = e.target.lastChild;
+        };
+        console.log("hello")
         clickTarget.classList.toggle('collapsed');
-        const arrow = e.target.lastChild;
+        
         arrow.classList.toggle('fa-rotate-180');
         arrow.classList.toggle('closed');
     }
-
-    
-    
 
 
 
@@ -224,15 +321,26 @@ function PageIndex(){
                                     {directories.map((item, i)=>(
                                         <div key={i}>
                                             <p onClick={collapseTest} className='directoryHeader'>{item[0].toUpperCase() + item.substring(1).replaceAll('-', ' ')}<i className="fa-solid fa-sort-down"></i></p>
+
                                             <div className="testItems collapsible collapsed">
                                                 {
                                                     fullData[item].length > 0 ? 
                                                 
                                                 fullData[item].map((name, i)=>(
+
+                                                    name.includes('.pdf') ? (
                                                     <div key={i} onClick={SetPage}>
                                                         <IndexItem filename={name} key={name}/>
-
                                                     </div>
+                                                    )
+
+                                                    :
+
+                                                    (
+                                                    <div key={i} onClick={SetPage}>
+                                                        <IndexItem filename={name} key={name}/>
+                                                    </div>
+                                                    )
                                                 ))
                                             
                                                     :
@@ -260,11 +368,20 @@ function PageIndex(){
                                 // When search and results to show
 
                                 (
-                                    searchResult.map((name, i)=>(
+                                    (searchResult.map((name, i)=>(
+                                        name.includes('.pdf') ? (
                                         <div key={i} onClick={SetPage} >
-                                            <h5 className="indexLink searched" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                            <h5 className="indexLink searched" filename={name} key={name} >{name.slice(0, -4).replaceAll('-', " ")}</h5>
                                         </div>
+                                        )
+                                         :
+                                        (
+                                        <div key={i} onClick={SetPage} >
+                                                <h5 className="indexLink searched" filename={name} key={name} >{name.slice(0, -5).replaceAll('-', " ")}</h5>
+                                        </div>
+                                        )
                                     ))
+                                )
                                 )
                             )
 
@@ -277,28 +394,49 @@ function PageIndex(){
 
             <div id="textPage">
                 {fileCurr === '' ? (
+                    <>
                     <div id="defaultScreen">
-                    <h2>Welcome to the boat info wiki page, select a file from the left to view info, or use the button at the top to create a new file</h2>
-                    <div>
-                        <ul id="guidePoints">
-                            <li>Use the index on the left hand side to search for info you're looking for;</li>
-                            <li>If you wish to submit new pages or edit info on an existing page, you will need an authorisation code;</li>
-                            <li>If you have a suggestion for information you'd like so see a page on which you can't find, or would like to request permission to create/edit new pages, please fill out the Suggestion form through the link in the top right of your screen</li>
-                        </ul>
+                        <h2>Welcome to the boat info wiki page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                        <div>
+                            <ul id="guidePoints">
+                                <li>Use the index on the left hand side to search for info you're looking for;</li>
+                                <li>If you wish to submit new pages or edit info on an existing page, you will need an authorisation code;</li>
+                                <li>If you have a suggestion for information you'd like so see a page on which you can't find, or would like to request permission to create/edit new pages, please fill out the Suggestion form through the link in the top right of your screen</li>
+                            </ul>
+                        </div>
                     </div>
-                    </div>
+                    <UpdatesSection updates={updates}/>
+                    </>
+
                 ) : (
-                    
+                    (fileCurr.includes('.pdf')) ? (
+                    <>
+                        <h1>{fileCurr.slice(0, -4)}</h1>
+                        <div className='pdfPageControls'>
+                            <button className="pagesButton" onClick={pageDown}><i class="fa-solid fa-minus"></i></button>
+                            <b>{pageNumber} of {numPages}</b>
+                            <button className="pagesButton" onClick={pageUp}><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <Document className='pdfContainer' file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+                            <Page pageNumber={pageNumber}/>
+                        </Document>
+                    </>
+                    )
+                    :
+                    (
                     <>
                         <h1>
                             {fileTitle}
                         </h1>
-                        <div dangerouslySetInnerHTML={{__html: bodyHTML}}>{}</div>
+                        <div className='textBody' dangerouslySetInnerHTML={{__html: bodyHTML}}>{}</div>
                         <Link to="/edit">
                         <button id="editButton">Edit <i class="fa-solid fa-pen"></i></button>
                         </Link>
                         
                     </>
+                    )
+
+                    
                     )
                 }
                 
@@ -307,5 +445,6 @@ function PageIndex(){
 
     )
 }
+)
 
 export default PageIndex

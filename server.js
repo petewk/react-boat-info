@@ -36,10 +36,8 @@ const {
 const s3Config = {
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_ACCESS_SECRET,
-
   region: "eu-west-2",
 };
-
 
 
 const s3Client = new S3Client(s3Config);
@@ -250,6 +248,7 @@ app.get('/success', function(req, res) {
 
     fileInfo = req.files.fileSent;
     const authCode = req.body.authCode;
+    let category = req.body.category;
 
     authQuery = "SELECT * FROM user_ids WHERE user_id = ?";
     db.query(authQuery, [authCode], (req, response)=>{
@@ -263,7 +262,7 @@ app.get('/success', function(req, res) {
             s3.putObject({
               Body: fileInfo.data,
               Bucket: 'boat-info-bucket',
-              Key:  req.body.category.replace('-', ' ') + '/' + fileInfo.name, 
+              Key:  category.replace('-', ' ') + '/' + fileInfo.name, 
             }).promise();
 
             const date = new Date();

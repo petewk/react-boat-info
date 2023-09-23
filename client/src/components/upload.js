@@ -26,12 +26,12 @@ function FileUpload(){
                 <input className="createFormInput" name="authCode" id="authCodeInput" placeholder='Enter auth code here' type="number" required></input> <br />
                 <input id="pdfSelector" type='file' name="fileSent"></input> <br />
                 <select name="category" id="categorySelect" required>
-              <option disabled selected hidden>Please Choose a Category...</option>
-              {
-                categories.map((item, index)=>(
-                  <option value={item}>{item[0].toUpperCase() + item.substring(1).replaceAll("-", " ")}</option>
-                ))
-              }
+                <option disabled selected hidden>Please Choose a Category...</option>
+                {
+                    categories.map((item, index)=>(
+                    <option value={item}>{item[0].toUpperCase() + item.substring(1).replaceAll("-", " ")}</option>
+                    ))
+                }
             </select>
                 <button>Submit</button>
             </form>

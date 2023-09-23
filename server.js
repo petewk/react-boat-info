@@ -263,7 +263,7 @@ app.get('/success', function(req, res) {
             s3.putObject({
               Body: fileInfo.data,
               Bucket: 'boat-info-bucket',
-              Key:  request.body.category.replace('-', ' ') + '/' + fileInfo.name, 
+              Key:  req.body.category.replace('-', ' ') + '/' + fileInfo.name, 
             }).promise();
 
             const date = new Date();

@@ -28,21 +28,21 @@ function UpdatesSection(props){
                         return (
                         <div className="updatesItem create" key={index}>
                             <h5 className="updatesTitle">{handleName(item.page_name)}</h5>
-                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">{item.made_by}</h5>
+                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">User</h5>
                         </div>
                         )
                     } else if (item.type === 'edit'){
                         return (
                         <div className="updatesItem edit" key={index}>
                             <h5 className="updatesTitle">{handleName(item.page_name)}</h5>
-                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">{item.made_by}</h5>
+                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">User</h5>
                         </div>
                         )
                     }  else {
                         return (
                         <div className="updatesItem pdf" key={index}>
                             <h5 className="updatesTitle">{handleName(item.page_name)}</h5>
-                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">{item.made_by}</h5>
+                            <h5 className="updatesDate">{handleDate(item.date)}</h5> <h5 className="updatesBy">User</h5>
                         </div>
                         )
                     }

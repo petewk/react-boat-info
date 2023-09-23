@@ -45,7 +45,7 @@ function App(){
             <div>
                 <header>
                     <nav id="navBar">
-                        <Link to='/' onClick={goHome}><h1 id="logo">Piper Info</h1></Link>
+                        <Link to='/' onClick={goHome}><h1 id="logo">Wikipe-Dea</h1></Link>
                         
                         <div id="links">
                         {needReturn ? (

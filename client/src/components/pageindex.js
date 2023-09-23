@@ -396,7 +396,7 @@ const PageIndex = forwardRef((props, ref)=>{
                 {fileCurr === '' ? (
                     <>
                     <div id="defaultScreen">
-                        <h2>Welcome to the boat info wiki page, select a file from the left to view info, or use the button at the top to create a new file</h2>
+                        <h2>Welcome to Wikipe-Dea, select a file from the left to view info, or use the button at the top to create a new file and contribute!</h2>
                         <div>
                             <ul id="guidePoints">
                                 <li>Use the index on the left hand side to search for info you're looking for;</li>

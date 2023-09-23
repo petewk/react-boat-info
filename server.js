@@ -34,10 +34,8 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const s3Config = {
-  // accessKeyId: process.env.AWS_ACCESS_KEY,
-  // secretAccessKey: process.env.AWS_ACCESS_SECRET,
-  accessKeyId: 'AKIA6KCLYZEP2HPEAYUW',
-  secretAccessKey: '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',
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_ACCESS_SECRET,
 
   region: "eu-west-2",
 };
@@ -57,8 +55,7 @@ const e = require('express');
 const db = mysql.createPool({
     host: 'eu-cdbr-west-03.cleardb.net',
     user: 'b218872c6def64',
-    // password: process.env.CLEARDB_PASSWORD_BOATINFO,
-    password: '6dc23cff',
+    password: process.env.CLEARDB_PASSWORD_BOATINFO,
     database: 'heroku_88822737ee106d6'
 });
 

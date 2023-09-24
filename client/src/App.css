@@ -633,6 +633,7 @@ input::-webkit-inner-spin-button {
 .updatesTitle, .titleHeader {
     position: absolute;
     left: 10px;
+    max-width: 220px;
 }
 
 .updatesDate, .dateHeader {
@@ -697,6 +698,14 @@ input::-webkit-inner-spin-button {
     width: 680px;
     margin-bottom: 10px;
 
+}
+
+.pdfPageControls input {
+    width: 30px;
+    height: 22px;
+    padding: 0px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .pagesButton {

@@ -145,6 +145,7 @@ const PageIndex = forwardRef((props, ref)=>{
         
         //get current file name and set current file
         setFileCurr(fileAtt);
+        setPageNumber(1);
 
         setFileTitle(fileNametemp.split('<')[0]);
 
@@ -223,6 +224,15 @@ const PageIndex = forwardRef((props, ref)=>{
         }
 
 
+    }
+
+    function changePageNum(e){
+        let newPage = parseInt(e.target.value);
+        if(newPage <= numPages){
+            setPageNumber(newPage);
+        } else {
+            setPageNumber(1)
+        }
     }
 
 
@@ -414,7 +424,7 @@ const PageIndex = forwardRef((props, ref)=>{
                         <h1>{fileCurr.slice(0, -4)}</h1>
                         <div className='pdfPageControls'>
                             <button className="pagesButton" onClick={pageDown}><i class="fa-solid fa-minus"></i></button>
-                            <b>{pageNumber} of {numPages}</b>
+                            <b><input type='number' onChange={changePageNum} value={pageNumber}></input> of {numPages}</b>
                             <button className="pagesButton" onClick={pageUp}><i class="fa-solid fa-plus"></i></button>
                         </div>
                         <Document className='pdfContainer' file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>

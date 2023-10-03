@@ -234,7 +234,7 @@ header {
 
 #defaultScreen {
     width: 45vw;
-    height: 500px;
+    height: min-content;
     color: var(--redBean);
     padding: 20px;
     background-color: var(--lavender);
@@ -697,7 +697,12 @@ input::-webkit-inner-spin-button {
     justify-content: right;
     width: 680px;
     margin-bottom: 10px;
+}
 
+
+.flexHomePage {
+    display: flex !important;
+    justify-content: space-between;
 }
 
 .pdfPageControls input {

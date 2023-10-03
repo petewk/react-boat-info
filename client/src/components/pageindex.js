@@ -400,11 +400,10 @@ const PageIndex = forwardRef((props, ref)=>{
             </div>  
 
 
-            {/* Text and body going here */}
+            {/* Text and body going here */}                              
 
-            <div id="textPage">
                 {fileCurr === '' ? (
-                    <>
+                    <div id="textPage" className='flexHomePage'>
                     <div id="defaultScreen">
                         <h2>Welcome to Wikipe-Dea, select a file from the left to view info, or use the button at the top to create a new file and contribute!</h2>
                         <div>
@@ -416,11 +415,11 @@ const PageIndex = forwardRef((props, ref)=>{
                         </div>
                     </div>
                     <UpdatesSection updates={updates}/>
-                    </>
+                    </div>
 
                 ) : (
                     (fileCurr.includes('.pdf')) ? (
-                    <>
+                    <div id="textPage">
                         <h1>{fileCurr.slice(0, -4)}</h1>
                         <div className='pdfPageControls'>
                             <button className="pagesButton" onClick={pageDown}><i class="fa-solid fa-minus"></i></button>
@@ -430,11 +429,11 @@ const PageIndex = forwardRef((props, ref)=>{
                         <Document className='pdfContainer' file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
                             <Page pageNumber={pageNumber}/>
                         </Document>
-                    </>
+                    </div>
                     )
                     :
                     (
-                    <>
+                    <div id="textPage">
                         <h1>
                             {fileTitle}
                         </h1>
@@ -443,14 +442,12 @@ const PageIndex = forwardRef((props, ref)=>{
                         <button id="editButton">Edit <i class="fa-solid fa-pen"></i></button>
                         </Link>
                         
-                    </>
+                    </div>
                     )
 
                     
                     )
                 }
-                
-            </div>
         </div>
 
     )

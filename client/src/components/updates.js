@@ -5,7 +5,7 @@ import '../App.css';
 
 function UpdatesSection(props){
 
-    const updatesRev = [...props.updates].reverse();
+    const updatesRev = [...props.updates];
 
 
     function handleDate(date){

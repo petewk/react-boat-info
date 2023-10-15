@@ -149,7 +149,7 @@ app.get("/api", async (req, res)=>{
     // Lets get the info from Mysql db here to display recent updates
     
     
-    updatesQuery = "SELECT * FROM edits_submits limit 10";
+    updatesQuery = "SELECT * FROM edits_submits ORDER BY id DESC limit 10";
     const asyncQuery = util.promisify(db.query).bind(db);
     
 
